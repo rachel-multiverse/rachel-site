@@ -1,0 +1,130 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Privacy Policy - Rachel" description="Privacy policy for the Rachel card game app">
+  <main class="legal">
+    <div class="container">
+      <h1>Privacy Policy</h1>
+      <p class="last-updated">Last updated: January 2025</p>
+
+      <section>
+        <h2>Overview</h2>
+        <p>Rachel is a card game app developed by Steve Hill. Your privacy is important to us. This policy explains what data we collect and how we use it.</p>
+      </section>
+
+      <section>
+        <h2>Data We Collect</h2>
+
+        <h3>Crash Reports & Performance Data</h3>
+        <p>We use <a href="https://sentry.io">Sentry</a> to collect crash reports and performance metrics. This helps us identify and fix bugs. This data includes:</p>
+        <ul>
+          <li>Device type and operating system version</li>
+          <li>App version</li>
+          <li>Crash logs and stack traces</li>
+          <li>Performance timing data</li>
+        </ul>
+        <p>We do not collect your IP address or any personally identifiable information through Sentry.</p>
+
+        <h3>Game Center</h3>
+        <p>If you use multiplayer features, Apple's Game Center handles player authentication and matchmaking. Please refer to <a href="https://www.apple.com/legal/privacy/">Apple's Privacy Policy</a> for details on how Game Center data is handled.</p>
+
+        <h3>Local Network</h3>
+        <p>For local multiplayer games, Rachel uses your device's local network to discover and connect to nearby players. This data stays on your local network and is not sent to any external servers.</p>
+      </section>
+
+      <section>
+        <h2>Data We Don't Collect</h2>
+        <ul>
+          <li>We don't collect your name, email, or contact information</li>
+          <li>We don't track your location</li>
+          <li>We don't use advertising or analytics SDKs</li>
+          <li>We don't sell or share your data with third parties</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Local Storage</h2>
+        <p>Rachel stores your game settings, statistics, and achievements locally on your device. This data is not transmitted to any server.</p>
+      </section>
+
+      <section>
+        <h2>Children's Privacy</h2>
+        <p>Rachel does not knowingly collect any personal information from children under 13.</p>
+      </section>
+
+      <section>
+        <h2>Changes to This Policy</h2>
+        <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page.</p>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>If you have questions about this privacy policy, please contact us at <a href="mailto:rachel@stevehill.xyz">rachel@stevehill.xyz</a>.</p>
+      </section>
+
+      <nav class="back-link">
+        <a href="/">&larr; Back to Rachel</a>
+      </nav>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .legal {
+    padding: 4rem 0;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .last-updated {
+    color: var(--color-text-muted);
+    margin-bottom: 3rem;
+  }
+
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+  }
+
+  h3 {
+    font-size: 1rem;
+    margin: 1.5rem 0 0.5rem;
+    color: var(--color-text);
+  }
+
+  p {
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    color: var(--color-text-muted);
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+
+  .back-link {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+</style>

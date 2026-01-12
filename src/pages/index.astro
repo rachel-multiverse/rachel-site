@@ -1,0 +1,219 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Rachel - A Strategic Card Game">
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Rachel</h1>
+        <p class="tagline">A strategic card game where the last player standing loses.</p>
+
+        <div class="cta">
+          <a href="#" class="button disabled">
+            <svg class="apple-logo" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+            </svg>
+            Coming Soon to the App Store
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <h2>How It Works</h2>
+
+        <div class="feature-grid">
+          <div class="feature">
+            <div class="feature-icon">🃏</div>
+            <h3>Match Cards</h3>
+            <p>Play cards that match the top card by suit or rank. Can't play? Draw from the deck.</p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">⚡</div>
+            <h3>Special Cards</h3>
+            <p>2s force draws, 7s skip players, Jacks attack, Queens reverse, Aces change suit.</p>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon">🏆</div>
+            <h3>Last One Loses</h3>
+            <p>Empty your hand to get out. The last player holding cards loses the game.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="multiplayer">
+      <div class="container">
+        <h2>Play Your Way</h2>
+        <div class="modes">
+          <div class="mode">
+            <h3>Solo</h3>
+            <p>Challenge AI opponents at Easy, Medium, or Hard difficulty.</p>
+          </div>
+          <div class="mode">
+            <h3>Local Multiplayer</h3>
+            <p>Play with friends nearby using Game Center or local networking.</p>
+          </div>
+          <div class="mode coming-soon">
+            <h3>Cross-Platform</h3>
+            <p>Coming soon: play across iOS and vintage computers (ZX Spectrum, C64, Amiga).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <nav>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="mailto:rachel@stevehill.xyz">Support</a>
+        </nav>
+        <p class="copyright">&copy; 2025 Steve Hill</p>
+      </div>
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .hero {
+    padding: 6rem 0 4rem;
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-green) 0%, #0f1419 100%);
+  }
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .tagline {
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: var(--color-text);
+    color: var(--color-bg);
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: opacity 0.2s;
+  }
+
+  .button:hover {
+    text-decoration: none;
+    opacity: 0.9;
+  }
+
+  .button.disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+
+  .apple-logo {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .features, .multiplayer {
+    padding: 4rem 0;
+  }
+
+  .features {
+    background: var(--color-bg-light);
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+  }
+
+  .feature {
+    text-align: center;
+  }
+
+  .feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .feature h3 {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature p {
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+  }
+
+  .modes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .mode {
+    padding: 1.5rem;
+    background: var(--color-bg-light);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .mode h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .mode p {
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+  }
+
+  .mode.coming-soon {
+    opacity: 0.7;
+  }
+
+  footer {
+    padding: 3rem 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  footer .container {
+    text-align: center;
+  }
+
+  footer nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .copyright {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+</style>
