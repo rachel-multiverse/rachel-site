@@ -59,10 +59,29 @@ import Layout from '../layouts/Layout.astro';
             <p>Play with friends nearby using Game Center or local networking.</p>
           </div>
           <div class="mode coming-soon">
-            <h3>Cross-Platform</h3>
-            <p>Coming soon: play across iOS and vintage computers (ZX Spectrum, C64, Amiga).</p>
+            <h3>Online</h3>
+            <p>Coming soon: play with anyone, anywhere.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="multiverse">
+      <div class="container">
+        <h2>The Multiverse</h2>
+        <p class="multiverse-intro">Rachel isn't just an iOS game. It's being ported to every computing platform that ever existed.</p>
+        <div class="platforms">
+          <span>ZX Spectrum</span>
+          <span>Commodore 64</span>
+          <span>Amiga</span>
+          <span>NES</span>
+          <span>Game Boy</span>
+          <span>Atari ST</span>
+          <span>Apple II</span>
+          <span>MS-DOS</span>
+          <span>+25 more</span>
+        </div>
+        <p class="multiverse-note">Same rules. Same 64-byte protocol. A ZX Spectrum can play against an iPhone. This is the plan.</p>
       </div>
     </section>
 
@@ -195,6 +214,39 @@ import Layout from '../layouts/Layout.astro';
 
   .mode.coming-soon {
     opacity: 0.7;
+  }
+
+  .multiverse {
+    padding: 4rem 0;
+    background: var(--color-bg-light);
+    text-align: center;
+  }
+
+  .multiverse-intro {
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .platforms {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .platforms span {
+    padding: 0.375rem 0.75rem;
+    background: rgba(255,255,255,0.1);
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+
+  .multiverse-note {
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+    font-style: italic;
   }
 
   footer {
