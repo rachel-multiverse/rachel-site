@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Support - Rachel" description="Help and support for the Rachel card game app">
+  <main class="legal">
+    <div class="container">
+      <h1>Support</h1>
+      <p class="last-updated">Last updated: July 2026</p>
+
+      <section>
+        <h2>Get in touch</h2>
+        <p>Email <a href="mailto:rachel@stevehill.xyz">rachel@stevehill.xyz</a> and you'll hear back from a real person, usually within a couple of days.</p>
+        <p>Bug reports are genuinely welcome. It helps enormously if you can include your device model, your iOS version, and what you were doing when it went wrong. You'll find the app version at the bottom of the Settings screen.</p>
+      </section>
+
+      <section>
+        <h2>Learning the game</h2>
+        <p>Rachel ships with an interactive tutorial that deals you real hands and walks you through every special card. Tap <strong>Tutorial</strong> on the main menu to play through it.</p>
+        <p>For a quick reference while you play, <strong>Rules</strong> on the main menu lists every card effect on one screen.</p>
+      </section>
+
+      <section>
+        <h2>Common questions</h2>
+
+        <h3>The other device can't find my game</h3>
+        <p>Local multiplayer discovers nearby players over your local network, so both devices need to be on the same Wi-Fi network, and Rachel needs permission to use it.</p>
+        <p>If you declined the local network prompt when you first hosted or joined a game, iOS won't ask again. Turn it back on in the iOS <strong>Settings</strong> app under <strong>Rachel &rsaquo; Local Network</strong>.</p>
+
+        <h3>Why can't I play a card that looks legal?</h3>
+        <p>Two rules catch people out. If someone has played an attack card against you and you hold a card that can counter it, you must play that counter. And once you draw, your turn ends immediately — you can't draw and then play.</p>
+        <p>When a card can't be played, the app explains why rather than just refusing the tap.</p>
+
+        <h3>Can I play against people who aren't nearby?</h3>
+        <p>Not in this version. Rachel currently supports solo play against the multiverse emissaries and local multiplayer with people on the same network. Internet multiplayer is in development.</p>
+
+        <h3>My game vanished when I closed the app</h3>
+        <p>It shouldn't have. Solo games save automatically, and <strong>Continue Game</strong> on the main menu picks up where you left off. If a game genuinely disappeared, please email us — that's a bug worth chasing.</p>
+
+        <h3>How do I reset my statistics?</h3>
+        <p>Settings has a game data section where you can clear your saved statistics and achievements. This can't be undone.</p>
+      </section>
+
+      <section>
+        <h2>Accessibility</h2>
+        <p>Rachel supports VoiceOver throughout, including spoken announcements when opponents play, when turns change, and when the game ends. It also honours Dynamic Type, so the interface scales with your preferred text size.</p>
+        <p>If something is hard to use with assistive technology, please tell us. Accessibility reports get priority.</p>
+      </section>
+
+      <section>
+        <h2>Privacy and terms</h2>
+        <p>Our <a href="/privacy">privacy policy</a> explains exactly what the app collects, and our <a href="/terms">terms of service</a> cover the legal side.</p>
+      </section>
+
+      <nav class="back-link">
+        <a href="/">&larr; Back to Rachel</a>
+      </nav>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .legal {
+    padding: 4rem 0;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .last-updated {
+    color: var(--color-text-muted);
+    margin-bottom: 3rem;
+  }
+
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+  }
+
+  h3 {
+    font-size: 1rem;
+    margin: 1.5rem 0 0.5rem;
+    color: var(--color-text);
+  }
+
+  p {
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  strong {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .back-link {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+</style>
