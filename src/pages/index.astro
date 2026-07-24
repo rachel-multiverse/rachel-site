@@ -49,7 +49,7 @@ import Layout from '../layouts/Layout.astro';
           <div class="feature">
             <div class="feature-icon">⚡</div>
             <h3>Special Cards</h3>
-            <p>2s force draws, 7s skip players, Jacks attack, Queens reverse, Aces change suit.</p>
+            <p>2s force draws, 7s skip players, Black Jacks attack, Red Jacks defend, Queens reverse, Aces change suit.</p>
           </div>
 
           <div class="feature">
@@ -67,11 +67,15 @@ import Layout from '../layouts/Layout.astro';
         <div class="modes">
           <div class="mode">
             <h3>Solo</h3>
-            <p>Challenge AI opponents at Easy, Medium, or Hard difficulty.</p>
+            <p>Face the emissaries of the multiverse, at Easy, Medium, or Hard.</p>
           </div>
           <div class="mode">
             <h3>Local Multiplayer</h3>
             <p>Play with friends nearby using Game Center or local networking.</p>
+          </div>
+          <div class="mode">
+            <h3>iPhone &amp; iPad</h3>
+            <p>One universal app. On iPad the table opens into a full horseshoe.</p>
           </div>
           <div class="mode coming-soon">
             <h3>Online</h3>
@@ -97,6 +101,28 @@ import Layout from '../layouts/Layout.astro';
           <span>+25 more</span>
         </div>
         <p class="multiverse-note">Same rules. Same 64-byte protocol. A ZX Spectrum can play against an iPhone. This is the plan.</p>
+
+        <h3 class="emissary-heading">Their emissaries got here first</h3>
+        <p class="emissary-intro">You don't wait for the ports to meet the multiverse. Fourteen emissaries already sit at your table, and they don't all come from machines.</p>
+
+        <img src="/images/emissary-table.png" alt="Three emissaries seated around the Rachel table on iPad, each with their universe's badge and colour" class="emissary-shot" />
+
+        <div class="emissaries">
+          <div class="emissary">
+            <h4>Sid <span class="universe">C64-1982</span></h4>
+            <p>From a universe of three-voice symphonies and 64 honest kilobytes. Smug about it.</p>
+          </div>
+          <div class="emissary">
+            <h4>Speccy <span class="universe">ZX-1984</span></h4>
+            <p>From a universe of bedroom coders, rubber keys, and glorious clashing colour. Plays chaos.</p>
+          </div>
+          <div class="emissary">
+            <h4>The Scribe <span class="universe">MAMLUK-1370</span></h4>
+            <p>From the origin universe &mdash; the first Rachel, before the world knew it. Teaches while winning.</p>
+          </div>
+        </div>
+
+        <p class="multiverse-note">The rift runs through time as well as hardware: a medieval copyist, a Victorian gambler, a deco card sharp, a neon-lit ghost from 2077. Each plays differently, and each has something to say about how you're doing.</p>
       </div>
     </section>
 
@@ -350,6 +376,62 @@ import Layout from '../layouts/Layout.astro';
     color: var(--color-text-muted);
     font-size: 0.9375rem;
     font-style: italic;
+  }
+
+  .emissary-heading {
+    margin-top: 3.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+  }
+
+  .emissary-intro {
+    color: var(--color-text-muted);
+    max-width: 40rem;
+    margin: 0 auto 2rem;
+  }
+
+  .emissary-shot {
+    width: 100%;
+    max-width: 46rem;
+    height: auto;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 2rem;
+  }
+
+  .emissaries {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: left;
+  }
+
+  .emissary {
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.04);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .emissary h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1.0625rem;
+  }
+
+  .emissary .universe {
+    display: block;
+    margin-top: 0.125rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+  }
+
+  .emissary p {
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
   }
 
   footer {
