@@ -1,102 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import Emissaries from '../components/Emissaries.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import PlayYourWay from '../components/PlayYourWay.astro';
+import ClosingCTA from '../components/ClosingCTA.astro';
 ---
 
 <Layout title="Rachel - A Strategic Card Game">
   <main>
     <Hero />
-
-    <section class="features">
-      <div class="container">
-        <h2>How It Works</h2>
-
-        <div class="feature-grid">
-          <div class="feature">
-            <div class="feature-icon">🃏</div>
-            <h3>Match Cards</h3>
-            <p>Play cards that match the top card by suit or rank. Can't play? Draw from the deck.</p>
-          </div>
-
-          <div class="feature">
-            <div class="feature-icon">⚡</div>
-            <h3>Special Cards</h3>
-            <p>2s force draws, 7s skip players, Black Jacks attack, Red Jacks defend, Queens reverse, Aces change suit.</p>
-          </div>
-
-          <div class="feature">
-            <div class="feature-icon">🏆</div>
-            <h3>Last One Loses</h3>
-            <p>Empty your hand to get out. The last player holding cards loses the game.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="multiplayer">
-      <div class="container">
-        <h2>Play Your Way</h2>
-        <div class="modes">
-          <div class="mode">
-            <h3>Solo</h3>
-            <p>Face the emissaries of the multiverse, at Easy, Medium, or Hard.</p>
-          </div>
-          <div class="mode">
-            <h3>Local Multiplayer</h3>
-            <p>Play with friends nearby using Game Center or local networking.</p>
-          </div>
-          <div class="mode">
-            <h3>iPhone &amp; iPad</h3>
-            <p>One universal app. On iPad the table opens into a full horseshoe.</p>
-          </div>
-          <div class="mode coming-soon">
-            <h3>Online</h3>
-            <p>Coming soon: play with anyone, anywhere.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="multiverse">
-      <div class="container">
-        <h2>The Multiverse</h2>
-        <p class="multiverse-intro">Rachel isn't just an iOS game. It's being ported to every computing platform that ever existed.</p>
-        <div class="platforms">
-          <span>ZX Spectrum</span>
-          <span>Commodore 64</span>
-          <span>Amiga</span>
-          <span>NES</span>
-          <span>Game Boy</span>
-          <span>Atari ST</span>
-          <span>Apple II</span>
-          <span>MS-DOS</span>
-          <span>+25 more</span>
-        </div>
-        <p class="multiverse-note">Same rules. Same 64-byte protocol. A ZX Spectrum can play against an iPhone. This is the plan.</p>
-
-        <h3 class="emissary-heading">Their emissaries got here first</h3>
-        <p class="emissary-intro">You don't wait for the ports to meet the multiverse. Fourteen emissaries already sit at your table, and they don't all come from machines.</p>
-
-        <img src="/images/emissary-table.png" alt="Three emissaries seated around the Rachel table on iPad, each with their universe's badge and colour" class="emissary-shot" />
-
-        <div class="emissaries">
-          <div class="emissary">
-            <h4>Sid <span class="universe">C64-1982</span></h4>
-            <p>From a universe of three-voice symphonies and 64 honest kilobytes. Smug about it.</p>
-          </div>
-          <div class="emissary">
-            <h4>Speccy <span class="universe">ZX-1984</span></h4>
-            <p>From a universe of bedroom coders, rubber keys, and glorious clashing colour. Plays chaos.</p>
-          </div>
-          <div class="emissary">
-            <h4>The Scribe <span class="universe">MAMLUK-1370</span></h4>
-            <p>From the origin universe &mdash; the first Rachel, before the world knew it. Teaches while winning.</p>
-          </div>
-        </div>
-
-        <p class="multiverse-note">The rift runs through time as well as hardware: a medieval copyist, a Victorian gambler, a deco card sharp, a neon-lit ghost from 2077. Each plays differently, and each has something to say about how you're doing.</p>
-      </div>
-    </section>
+    <Emissaries />
+    <HowItWorks />
+    <PlayYourWay />
+    <ClosingCTA />
 
     <footer>
       <div class="container">
@@ -112,282 +29,20 @@ import Hero from '../components/Hero.astro';
 </Layout>
 
 <style>
+  footer {
+    padding: 3rem 0;
+    background: var(--felt-deep);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+  }
+
   .container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 1.5rem;
   }
 
-  .hero {
-    padding: 6rem 0 4rem;
-    text-align: center;
-    background: linear-gradient(135deg, var(--color-green) 0%, #0f1419 100%);
-  }
-
-  h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
-  }
-
-  .tagline {
-    font-size: 1.25rem;
-    color: var(--color-text-muted);
-    margin-bottom: 2rem;
-  }
-
-  .screenshots {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    padding: 0 1rem;
-  }
-
-  /* Every part of the phone - padding, notch, corner radii - is derived
-     from --frame-w, so the whole device scales as one piece. Set only
-     --frame-w and --frame-h to resize it; never hardcode the parts, or the
-     notch drifts out of proportion at other widths. */
-  .device-frame {
-    --frame-w: 180px;
-    --frame-h: 370px;
-    --pad: calc(var(--frame-w) * 0.055);
-    position: relative;
-    width: var(--frame-w);
-    height: var(--frame-h);
-    flex-shrink: 0;
-    background: #1c1c1e;
-    border-radius: calc(var(--frame-w) * 0.167);
-    padding: var(--pad);
-    box-shadow:
-      0 0 0 2px #3a3a3c,
-      0 15px 30px rgba(0,0,0,0.4);
-    transition: transform 0.3s ease;
-  }
-
-  .device-frame:nth-child(2) {
-    --frame-w: 200px;
-    --frame-h: 410px;
-  }
-
-  .device-frame:hover {
-    transform: translateY(-8px);
-  }
-
-  .device-notch {
-    position: absolute;
-    top: var(--pad);
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(var(--frame-w) * 0.45);
-    height: calc(var(--frame-w) * 0.12);
-    background: #1c1c1e;
-    border-radius: 0 0 calc(var(--frame-w) * 0.07) calc(var(--frame-w) * 0.07);
-    z-index: 10;
-  }
-
-  .device-screen {
-    width: 100%;
-    height: 100%;
-    border-radius: calc(var(--frame-w) * 0.111);
-    object-fit: cover;
-    object-position: top;
-    background: var(--color-bg);
-  }
-
-  .button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.875rem 1.5rem;
-    background: var(--color-text);
-    color: var(--color-bg);
-    border-radius: 0.5rem;
-    font-weight: 600;
-    transition: opacity 0.2s;
-  }
-
-  .button:hover {
-    text-decoration: none;
-    opacity: 0.9;
-  }
-
-  .button.disabled {
-    opacity: 0.7;
-    cursor: default;
-  }
-
-  .apple-logo {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
-
-  .features, .multiplayer {
-    padding: 4rem 0;
-  }
-
-  .features {
-    background: var(--color-bg-light);
-  }
-
-  h2 {
-    font-size: 1.75rem;
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-
-  .feature-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
-  }
-
-  .feature {
-    text-align: center;
-  }
-
-  .feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .feature h3 {
-    font-size: 1.125rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .feature p {
-    color: var(--color-text-muted);
-    font-size: 0.9375rem;
-  }
-
-  .modes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .mode {
-    padding: 1.5rem;
-    background: var(--color-bg-light);
-    border-radius: 0.75rem;
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-
-  .mode h3 {
-    margin-bottom: 0.5rem;
-  }
-
-  .mode p {
-    color: var(--color-text-muted);
-    font-size: 0.9375rem;
-  }
-
-  .mode.coming-soon {
-    opacity: 0.7;
-  }
-
-  .multiverse {
-    padding: 4rem 0;
-    background: var(--color-bg-light);
-    text-align: center;
-  }
-
-  .multiverse-intro {
-    color: var(--color-text-muted);
-    margin-bottom: 1.5rem;
-  }
-
-  .platforms {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .platforms span {
-    padding: 0.375rem 0.75rem;
-    background: rgba(255,255,255,0.1);
-    border-radius: 1rem;
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
-  }
-
-  .multiverse-note {
-    color: var(--color-text-muted);
-    font-size: 0.9375rem;
-    font-style: italic;
-  }
-
-  .emissary-heading {
-    margin-top: 3.5rem;
-    margin-bottom: 0.75rem;
-    font-size: 1.5rem;
-  }
-
-  .emissary-intro {
-    color: var(--color-text-muted);
-    max-width: 40rem;
-    margin: 0 auto 2rem;
-  }
-
-  .emissary-shot {
-    width: 100%;
-    max-width: 46rem;
-    height: auto;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(255,255,255,0.1);
-    margin-bottom: 2rem;
-  }
-
-  .emissaries {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    text-align: left;
-  }
-
-  .emissary {
-    padding: 1.5rem;
-    background: rgba(255,255,255,0.04);
-    border-radius: 0.75rem;
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-
-  .emissary h4 {
-    margin-bottom: 0.5rem;
-    font-size: 1.0625rem;
-  }
-
-  .emissary .universe {
-    display: block;
-    margin-top: 0.125rem;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 0.75rem;
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    color: var(--color-text-muted);
-  }
-
-  .emissary p {
-    color: var(--color-text-muted);
-    font-size: 0.9375rem;
-  }
-
-  footer {
-    padding: 3rem 0;
-    border-top: 1px solid rgba(255,255,255,0.1);
-  }
-
-  footer .container {
-    text-align: center;
-  }
-
-  footer nav {
+  nav {
     display: flex;
     justify-content: center;
     gap: 2rem;
@@ -395,25 +50,7 @@ import Hero from '../components/Hero.astro';
   }
 
   .copyright {
-    color: var(--color-text-muted);
+    color: var(--text-muted);
     font-size: 0.875rem;
-  }
-
-  /* Keep this block last. It overrides base rules of equal specificity, so
-     source order is what makes it win - an earlier copy of this media query
-     silently did nothing, which left the phone notches full-size on small
-     screens while the frames around them shrank. */
-  @media (max-width: 640px) {
-    .screenshots {
-      gap: 0.75rem;
-    }
-    .device-frame {
-      --frame-w: 100px;
-      --frame-h: 205px;
-    }
-    .device-frame:nth-child(2) {
-      --frame-w: 120px;
-      --frame-h: 245px;
-    }
   }
 </style>

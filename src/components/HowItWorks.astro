@@ -1,0 +1,81 @@
+---
+import PlayingCard from './PlayingCard.astro';
+
+const RULES = [
+  {
+    rank: '8', suit: 'clubs' as const,
+    title: 'Match cards',
+    body: "Play cards that match the top card by suit or rank. Can't play? Draw from the deck.",
+  },
+  {
+    rank: 'J', suit: 'spades' as const,
+    title: 'Special cards',
+    body: '2s force draws, 7s skip players, Black Jacks attack, Red Jacks defend, Queens reverse, Aces change suit.',
+  },
+  {
+    rank: 'A', suit: 'hearts' as const,
+    title: 'Last one loses',
+    body: 'Empty your hand to get out. The last player still holding cards loses the game.',
+  },
+];
+---
+
+<section class="how">
+  <div class="container">
+    <h2>How it works</h2>
+    <div class="rules">
+      {RULES.map((r) => (
+        <article class="rule">
+          <PlayingCard rank={r.rank} suit={r.suit} />
+          <h3>{r.title}</h3>
+          <p>{r.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .how {
+    background: var(--felt);
+    padding: 5rem 0;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 4.5vw, 2.75rem);
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 2.5rem;
+  }
+
+  .rule {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    --card-w: 76px;
+  }
+
+  .rule h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    margin: 1.25rem 0 0.5rem;
+  }
+
+  .rule p {
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+  }
+</style>

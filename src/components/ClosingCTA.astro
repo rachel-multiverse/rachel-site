@@ -1,0 +1,43 @@
+---
+import AppStoreButton from './AppStoreButton.astro';
+---
+
+<section class="closing">
+  <div class="container">
+    <h2>Take a seat</h2>
+    <p>Fourteen emissaries are waiting, and none of them intend to lose.</p>
+    <AppStoreButton size="large" />
+    <p class="meta">iPhone &amp; iPad · £2.99 · No ads, no tracking</p>
+  </div>
+</section>
+
+<style>
+  .closing {
+    background: var(--felt-surface);
+    padding: 5.5rem 0;
+    text-align: center;
+  }
+
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .closing p {
+    color: var(--text-muted);
+    margin-bottom: 1.75rem;
+  }
+
+  .meta {
+    margin-top: 1rem;
+    margin-bottom: 0;
+    font-size: 0.875rem;
+  }
+</style>
