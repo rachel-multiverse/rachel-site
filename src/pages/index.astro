@@ -174,14 +174,21 @@ import Layout from '../layouts/Layout.astro';
     padding: 0 1rem;
   }
 
+  /* Every part of the phone - padding, notch, corner radii - is derived
+     from --frame-w, so the whole device scales as one piece. Set only
+     --frame-w and --frame-h to resize it; never hardcode the parts, or the
+     notch drifts out of proportion at other widths. */
   .device-frame {
+    --frame-w: 180px;
+    --frame-h: 370px;
+    --pad: calc(var(--frame-w) * 0.055);
     position: relative;
-    width: 180px;
-    height: 370px;
+    width: var(--frame-w);
+    height: var(--frame-h);
     flex-shrink: 0;
     background: #1c1c1e;
-    border-radius: 30px;
-    padding: 10px;
+    border-radius: calc(var(--frame-w) * 0.167);
+    padding: var(--pad);
     box-shadow:
       0 0 0 2px #3a3a3c,
       0 15px 30px rgba(0,0,0,0.4);
@@ -189,68 +196,33 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .device-frame:nth-child(2) {
-    width: 200px;
-    height: 410px;
-    border-radius: 34px;
-    padding: 11px;
+    --frame-w: 200px;
+    --frame-h: 410px;
   }
 
   .device-frame:hover {
     transform: translateY(-8px);
   }
 
-  @media (max-width: 640px) {
-    .screenshots {
-      gap: 0.75rem;
-    }
-    .device-frame {
-      width: 100px;
-      height: 205px;
-      border-radius: 18px;
-      padding: 6px;
-    }
-    .device-frame:nth-child(2) {
-      width: 120px;
-      height: 245px;
-      border-radius: 20px;
-      padding: 7px;
-    }
-    .device-notch {
-      height: 16px;
-      width: 60px;
-      border-radius: 0 0 10px 10px;
-    }
-  }
-
   .device-notch {
     position: absolute;
-    top: 10px;
+    top: var(--pad);
     left: 50%;
     transform: translateX(-50%);
-    width: 80px;
-    height: 22px;
+    width: calc(var(--frame-w) * 0.45);
+    height: calc(var(--frame-w) * 0.12);
     background: #1c1c1e;
-    border-radius: 0 0 12px 12px;
+    border-radius: 0 0 calc(var(--frame-w) * 0.07) calc(var(--frame-w) * 0.07);
     z-index: 10;
-  }
-
-  .device-frame:nth-child(2) .device-notch {
-    width: 90px;
-    height: 24px;
-    top: 11px;
   }
 
   .device-screen {
     width: 100%;
     height: 100%;
-    border-radius: 20px;
+    border-radius: calc(var(--frame-w) * 0.111);
     object-fit: cover;
     object-position: top;
     background: var(--color-bg);
-  }
-
-  .device-frame:nth-child(2) .device-screen {
-    border-radius: 23px;
   }
 
   .button {
@@ -453,5 +425,23 @@ import Layout from '../layouts/Layout.astro';
   .copyright {
     color: var(--color-text-muted);
     font-size: 0.875rem;
+  }
+
+  /* Keep this block last. It overrides base rules of equal specificity, so
+     source order is what makes it win - an earlier copy of this media query
+     silently did nothing, which left the phone notches full-size on small
+     screens while the frames around them shrank. */
+  @media (max-width: 640px) {
+    .screenshots {
+      gap: 0.75rem;
+    }
+    .device-frame {
+      --frame-w: 100px;
+      --frame-h: 205px;
+    }
+    .device-frame:nth-child(2) {
+      --frame-w: 120px;
+      --frame-h: 245px;
+    }
   }
 </style>
