@@ -80,37 +80,44 @@ subset is immaterial.
 
 - [ ] **Step 2: Subset and convert the font**
 
+Pinning the variable font to a single weight is a separate tool from subsetting —
+`pyftsubset` has no `--instance` flag. Instance first, then subset:
+
 ```bash
 mkdir -p public/fonts
-pyftsubset \
+
+python3 -m fontTools.varLib.instancer \
   ../rachel-ios/RachelApp/RachelApp/Fonts/PlayfairDisplay-VariableFont.ttf \
+  wght=700 -o /tmp/playfair-700.ttf
+
+pyftsubset /tmp/playfair-700.ttf \
   --output-file=public/fonts/playfair-display-700.woff2 \
   --flavor=woff2 \
   --unicodes="U+0020-007E,U+00A0-00FF,U+2018-201D,U+2022,U+2026,U+00B7" \
-  --layout-features="kern,liga" \
-  --instance="wght=700"
+  --layout-features="kern,liga"
 ```
 
-The `--instance="wght=700"` flag pins the variable font to Bold, which is the
-only weight the design uses for display type. The unicode range covers Latin,
-Latin-1, smart quotes, the bullet, the ellipsis and the middot (`·`) used in the
-meta line.
+`varLib.instancer` pins the font to Bold, the only weight the design uses for
+display type. The unicode range covers Latin, Latin-1, smart quotes, the bullet,
+the ellipsis and the middot (`·`) used in the meta line.
 
 - [ ] **Step 3: Verify the output is small and valid**
 
 ```bash
-ls -l public/fonts/playfair-display-700.woff2 | awk '{print $5 " bytes"}'
+echo "$(stat -f%z public/fonts/playfair-display-700.woff2) bytes"
 python3 -c "
 from fontTools.ttLib import TTFont
 f = TTFont('public/fonts/playfair-display-700.woff2')
 print('flavor:', f.flavor)
 print('glyphs:', len(f.getGlyphOrder()))
+print('weightClass:', f['OS/2'].usWeightClass)
 "
 ```
 
-Expected: under 40000 bytes, `flavor: woff2`, and a glyph count above 200.
-If the file is larger than 60 KB, the `--instance` flag did not apply — check
-for a `pyftsubset` error in Step 2 rather than proceeding.
+Expected: under 40000 bytes, `flavor: woff2`, a glyph count above 200, and
+`weightClass: 700`. Actual on first run: 17120 bytes, 239 glyphs. If the file
+is larger than 60 KB, the instancer step did not apply — check its output rather
+than proceeding.
 
 - [ ] **Step 4: Copy the licence**
 
