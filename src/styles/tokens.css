@@ -1,0 +1,28 @@
+/* The site's palette is the game's card table. Any colour that isn't felt,
+   card stock, ink or pip red is a mistake - the page and the app must read
+   as one product. */
+
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('/fonts/playfair-display-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --felt-deep: #114526;
+  --felt: #1d6038;
+  --felt-light: #2e7d4f;
+  --card-stock: #fdfcf8;
+  --ink: #14171a;
+  --pip-red: #d1213b;
+  --text: #f4f2ec;
+  --text-muted: rgba(255, 255, 255, 0.72);
+
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --felt-surface: radial-gradient(ellipse at 50% 30%,
+    var(--felt-light) 0%, var(--felt) 45%, var(--felt-deep) 100%);
+}

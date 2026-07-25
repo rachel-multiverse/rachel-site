@@ -155,12 +155,16 @@ no third-party tracking, and a local subset avoids the extra connection."
 
 - [ ] **Step 1: Write the check that must fail**
 
+Astro inlines a layout's `<style is:global>` into every page's HTML rather than
+emitting it to `dist/_astro/*.css`, so the check must search the built HTML:
+
 ```bash
-npm run build && grep -c "1d9bf0" dist/_astro/*.css
+npm run build >/dev/null && grep -rl "1d9bf0" dist/
 ```
 
-Expected now: a non-zero count — the old blue accent is still there. This is the
-check Task 2 must drive to zero.
+Expected now: four paths (`dist/index.html`, `dist/privacy/index.html`,
+`dist/support/index.html`, `dist/terms/index.html`) — the old blue accent is
+still there. This is the check Task 2 must drive to nothing.
 
 - [ ] **Step 2: Create the tokens file**
 
@@ -252,10 +256,10 @@ In `src/layouts/Layout.astro`, inside `<head>` immediately after the
 - [ ] **Step 5: Run the check and confirm it now passes**
 
 ```bash
-npm run build && grep -c "1d9bf0" dist/_astro/*.css || echo "PASS: no blue accent remains"
+npm run build >/dev/null && grep -rl "1d9bf0" dist/ || echo "PASS: no blue accent remains"
 ```
 
-Expected: `PASS: no blue accent remains`. If a count prints instead, find the
+Expected: `PASS: no blue accent remains`. If paths print instead, find the
 offender with `grep -rn "1d9bf0" src/` and replace it with a token.
 
 - [ ] **Step 6: Commit**
@@ -1404,7 +1408,7 @@ Expected: `PASS: no stale tokens`. Fix any hits by mapping to the new names.
 ```bash
 npm run build
 echo "--- no blue accent ---"
-grep -c "1d9bf0" dist/_astro/*.css || echo "PASS"
+grep -rl "1d9bf0" dist/ || echo "PASS"
 echo "--- image payload ---"
 du -ch dist/images/* | tail -1
 echo "--- total page weight ---"
@@ -1451,8 +1455,8 @@ git push origin main
 ```bash
 until curl -s -L --max-time 15 https://rachel.stevehill.xyz/ | grep -q "emissaries got here first"; do sleep 5; done
 echo "--- live checks ---"
-CSS=$(curl -s -L https://rachel.stevehill.xyz/ | grep -oE '/_astro/[^"]+\.css' | head -1)
-curl -s -L "https://rachel.stevehill.xyz$CSS" | grep -c "1d9bf0" || echo "PASS: no blue accent live"
+curl -s -L https://rachel.stevehill.xyz/ | grep -c "1d9bf0" | grep -q '^0$' \
+  && echo "PASS: no blue accent live" || echo "FAIL: blue accent still live"
 for p in / /privacy /terms /support; do
   echo "$(curl -s -o /dev/null -w '%{http_code}' -L https://rachel.stevehill.xyz$p)  $p"
 done
