@@ -1,0 +1,171 @@
+---
+import AppStoreButton from './AppStoreButton.astro';
+import PlayingCard from './PlayingCard.astro';
+
+// Fanned hand beside the phone. Each card deals in with its own delay and
+// settles at its own angle, so the arc looks thrown rather than placed.
+const HAND = [
+  { rank: 'K', suit: 'spades' as const,   rot: -14, x: -104, y: 16, delay: 0 },
+  { rank: '7', suit: 'diamonds' as const, rot: -7,  x: -52,  y: 4,  delay: 80 },
+  { rank: '2', suit: 'clubs' as const,    rot: 0,   x: 0,    y: 0,  delay: 160 },
+  { rank: 'A', suit: 'hearts' as const,   rot: 7,   x: 52,   y: 4,  delay: 240 },
+  { rank: 'J', suit: 'spades' as const,   rot: 14,  x: 104,  y: 16, delay: 320 },
+];
+---
+
+<section class="hero">
+  <div class="container">
+    <div class="copy">
+      <h1>Rachel</h1>
+      <p class="promise">
+        Shed your hand. Survive the attacks.<br />
+        The last player standing loses.
+      </p>
+      <AppStoreButton size="large" />
+      <p class="meta">iPhone &amp; iPad · £2.99 · No ads, no tracking</p>
+    </div>
+
+    <div class="stage">
+      <img
+        src="/images/screenshot-2.webp"
+        alt="A Rachel game in progress, with an opponent down to their last card"
+        width="400"
+        height="865"
+        class="phone"
+      />
+      <div class="hand">
+        {HAND.map((c) => (
+          <PlayingCard
+            rank={c.rank}
+            suit={c.suit}
+            class="dealt"
+            style={`--rot:${c.rot}deg; --x:${c.x}px; --y:${c.y}px; --delay:${c.delay}ms`}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background: var(--felt-surface);
+    position: relative;
+    overflow: hidden;
+    padding: 4.5rem 0 5rem;
+  }
+
+  /* The same felt watermark the game puts on its table. */
+  .hero::before {
+    content: 'Rachel';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(9rem, 26vw, 22rem);
+    color: rgba(255, 255, 255, 0.04);
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3.25rem, 8vw, 5.5rem);
+    line-height: 0.95;
+    margin-bottom: 1.25rem;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+  }
+
+  .promise {
+    font-size: clamp(1.0625rem, 2.2vw, 1.3rem);
+    color: var(--text);
+    margin-bottom: 1.75rem;
+    max-width: 26rem;
+  }
+
+  .meta {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .stage {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 3rem;
+  }
+
+  .phone {
+    width: min(260px, 70%);
+    height: auto;
+    border-radius: 1.6rem;
+    box-shadow: 0 0 0 8px #1c1c1e, 0 0 0 10px #3a3a3c,
+      0 26px 50px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 2;
+  }
+
+  .hand {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 3;
+    --card-w: 62px;
+  }
+
+  .hand :global(.dealt) {
+    position: absolute;
+    bottom: 0;
+    left: calc(var(--card-w) / -2);
+    animation: deal 500ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+    animation-delay: var(--delay);
+  }
+
+  /* Cards fly in from the deck's position above, then settle into the arc.
+     Transform and opacity only - both run on the compositor. */
+  @keyframes deal {
+    from {
+      transform: translate(0, -120px) rotate(0deg) scale(0.86);
+      opacity: 0;
+    }
+    to {
+      transform: translate(var(--x), var(--y)) rotate(var(--rot)) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hand :global(.dealt) {
+      animation: none;
+      transform: translate(var(--x), var(--y)) rotate(var(--rot));
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .container {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      text-align: center;
+    }
+    .promise { margin-inline: auto; }
+    .hand { --card-w: 52px; }
+  }
+</style>
