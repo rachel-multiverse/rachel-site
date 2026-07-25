@@ -1,0 +1,56 @@
+---
+interface Props {
+  rank: string;
+  suit: 'hearts' | 'diamonds' | 'clubs' | 'spades';
+  class?: string;
+  style?: string;
+}
+
+const { rank, suit, class: className = '', style } = Astro.props;
+
+const GLYPHS = {
+  hearts: '♥',
+  diamonds: '♦',
+  clubs: '♣',
+  spades: '♠',
+} as const;
+
+const red = suit === 'hearts' || suit === 'diamonds';
+---
+
+<div class:list={['card', red ? 'red' : 'black', className]} style={style} aria-hidden="true">
+  <span class="rank">{rank}</span>
+  <span class="suit">{GLYPHS[suit]}</span>
+</div>
+
+<style>
+  /* Cards are markup, not images: they stay crisp at any size and animate on
+     the compositor rather than forcing layout. */
+  .card {
+    width: var(--card-w, 68px);
+    height: calc(var(--card-w, 68px) * 1.4);
+    background: var(--card-stock);
+    border-radius: calc(var(--card-w, 68px) * 0.09);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.34);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: calc(var(--card-w, 68px) * 0.08);
+    font-family: var(--font-display);
+    line-height: 1;
+    box-sizing: border-box;
+  }
+
+  .red { color: var(--pip-red); }
+  .black { color: var(--ink); }
+
+  .rank {
+    font-size: calc(var(--card-w, 68px) * 0.28);
+    font-weight: 700;
+  }
+
+  .suit {
+    font-size: calc(var(--card-w, 68px) * 0.26);
+    margin-top: calc(var(--card-w, 68px) * 0.02);
+  }
+</style>
