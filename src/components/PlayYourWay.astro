@@ -1,8 +1,13 @@
 ---
 const MODES = [
   { title: 'Solo', body: 'Face the emissaries of the multiverse, at Easy, Medium, or Hard.' },
-  { title: 'Local multiplayer', body: 'Play with friends nearby using Game Center or local networking.' },
-  { title: 'iPhone & iPad', body: 'One universal app. On iPad the table opens into a full horseshoe.' },
+  { title: 'Local multiplayer', body: 'Play with friends nearby over Game Center or your local network.' },
+  // Cross-device play works today - an iPhone hosting and an iPad joining is a
+  // real configuration, not a roadmap item, and the lobby shot below is one.
+  // The multiverse claim further up is about *other machines* and is correctly
+  // marked as a plan; this is the part that already ships, and saying nothing
+  // about it undersold the app.
+  { title: 'iPhone & iPad together', body: 'One universal app, and either can host. On iPad the table opens into a full horseshoe.' },
   { title: 'Online', body: 'Coming soon: play with anyone, anywhere.', soon: true },
 ];
 ---
@@ -18,6 +23,20 @@ const MODES = [
         </article>
       ))}
     </div>
+
+    <figure class="lobby">
+      <img
+        src="/images/shot-lobby.webp"
+        alt="The host lobby: two human players who have joined, and two seats held by named emissaries that a joiner can still take"
+        width="400"
+        height="869"
+        loading="lazy"
+      />
+      <figcaption>
+        Seats nobody claims are played by an emissary, so a game never waits
+        for a fourth.
+      </figcaption>
+    </figure>
   </div>
 </section>
 
@@ -65,4 +84,28 @@ const MODES = [
   }
 
   .mode.soon { opacity: 0.68; }
+
+  .lobby {
+    margin: 3rem auto 0;
+    max-width: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .lobby img {
+    width: min(230px, 60%);
+    height: auto;
+    border-radius: 1.4rem;
+    box-shadow: 0 0 0 7px #1c1c1e, 0 0 0 9px #3a3a3c,
+      0 20px 40px rgba(0, 0, 0, 0.45);
+  }
+
+  .lobby figcaption {
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    text-align: center;
+    max-width: 26rem;
+  }
 </style>

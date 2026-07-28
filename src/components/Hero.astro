@@ -27,10 +27,10 @@ const HAND = [
 
     <div class="stage">
       <img
-        src="/images/screenshot-2.webp"
-        alt="A Rachel game in progress, with an opponent down to their last card"
+        src="/images/shot-table.webp"
+        alt="A Rachel game on iPhone: Speccy has gone out first, The Scribe is down to one card and the table is warning about it, and it is your turn"
         width="400"
-        height="865"
+        height="869"
         class="phone"
       />
       <div class="hand">
@@ -55,7 +55,12 @@ const HAND = [
     padding: 4.5rem 0 5rem;
   }
 
-  /* The same felt watermark the game puts on its table. */
+  /* A felt watermark, as a table might carry.
+
+     The game itself no longer has one - it was taken out of the app - so this
+     is the site's own decoration rather than a mirror of the product. Kept
+     because the hero needs something behind the fold of the felt; delete the
+     rule if the page should match the app exactly. */
   .hero::before {
     content: 'Rachel';
     position: absolute;
