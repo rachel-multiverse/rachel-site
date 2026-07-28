@@ -1,0 +1,238 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { APP_STORE_URL } from '../config';
+
+// Boilerplate a writer can lift verbatim, so a description of Rachel that
+// appears somewhere else is one we wrote rather than one reconstructed from
+// the marketing page. The three lengths exist because that is what a listing,
+// a paragraph and a feature actually need.
+//
+// Deliberately no downloadable archive. The full-resolution screenshots are
+// ~50MB a set and are not in this repo by design - serving them from the site
+// would put the whole thing back. Anyone who needs them can ask, and they are
+// reproducible from the capture script in minutes.
+const SHOTS = [
+  { src: '/images/shot-table.webp', alt: 'A game in progress on iPhone, with an opponent down to their last card', caption: 'The table' },
+  { src: '/images/shot-lobby.webp', alt: 'The host lobby, with two players joined and two seats held by emissaries', caption: 'Hosting a game' },
+  { src: '/images/shot-tutorial.webp', alt: 'The tutorial explaining a special card with a real hand dealt', caption: 'The tutorial' },
+];
+---
+
+<Layout
+  title="Press - Rachel"
+  description="Press information for Rachel: boilerplate copy, screenshots, the app icon, and who to contact."
+>
+  <main class="press">
+    <div class="container">
+      <h1>Press</h1>
+      <p class="lede">
+        Everything here is free to use and free to edit. If you need something
+        that isn't on this page, ask — the reply comes from the person who
+        wrote the app.
+      </p>
+
+      <section>
+        <h2>The facts</h2>
+        <dl>
+          <div><dt>Name</dt><dd>Rachel</dd></div>
+          <div><dt>Developer</dt><dd>Steve Hill</dd></div>
+          <div><dt>Platforms</dt><dd>iPhone and iPad, one universal app</dd></div>
+          <div><dt>Price</dt><dd>£2.99, paid once. No advertising, no tracking, no subscription, no in-app purchases</dd></div>
+          <div>
+            <dt>Availability</dt>
+            <dd>{APP_STORE_URL ? 'On the App Store' : 'Not yet released — awaiting App Store review'}</dd>
+          </div>
+          <div><dt>Contact</dt><dd><a href="mailto:rachel@stevehill.xyz">rachel@stevehill.xyz</a></dd></div>
+        </dl>
+      </section>
+
+      <section>
+        <h2>Boilerplate</h2>
+
+        <h3>One line</h3>
+        <blockquote>
+          Rachel is a strategic card game for iPhone and iPad where the last
+          player still holding cards loses.
+        </blockquote>
+
+        <h3>One paragraph</h3>
+        <blockquote>
+          Rachel is a strategic card game for iPhone and iPad. Match the top
+          card by suit or rank, empty your hand to get out, and try not to be
+          the last player left holding cards. Twos force draws, sevens skip,
+          black jacks attack and red jacks defend — and every one of them
+          stacks, so a two played against you can come back round as an
+          eight. Play solo against fourteen opponents drawn from
+          across a fractured multiverse, or over local networking with people
+          nearby.
+        </blockquote>
+
+        <h3>The longer version</h3>
+        <blockquote>
+          <p>
+            Rachel is a strategic card game for iPhone and iPad, built around a
+            shedding game with an unusual ending: emptying your hand gets you
+            out, and the player still holding cards when everyone else has gone
+            is the one who loses.
+          </p>
+          <p>
+            Six special cards do the work. Twos force the next player to draw,
+            sevens skip them, queens reverse the direction of play and aces
+            nominate a new suit. Black jacks attack for five cards; red jacks
+            defend against them. Attacks stack and counters are compulsory: a
+            deck holds four twos, so an attack that starts at two can reach
+            the player who began it as an eight.
+          </p>
+          <p>
+            Solo play is against emissaries from a fractured multiverse —
+            fourteen of them, each from a different universe, and not all from
+            machines. Multiplayer runs over Game Center or a local network,
+            with an iPhone and an iPad able to sit at the same table.
+          </p>
+          <p>
+            Underneath is a fixed 64-byte binary protocol designed to be
+            parseable in Z80, 6502 and 68000 assembly, so that the same game
+            can eventually be played on the machines it looks like it came
+            from. The specification is published in full.
+          </p>
+        </blockquote>
+      </section>
+
+      <section>
+        <h2>Images</h2>
+        <p>
+          These are the web-sized versions the site uses. Full-resolution
+          screenshots for every device size are available on request — they run
+          to about 50MB a set, which is why they aren't served from here.
+        </p>
+
+        <figure class="icon">
+          <img src="/images/app-icon.webp" alt="The Rachel app icon" width="512" height="512" loading="lazy" />
+          <figcaption>App icon</figcaption>
+        </figure>
+
+        <div class="shots">
+          {SHOTS.map((s) => (
+            <figure>
+              <img src={s.src} alt={s.alt} width="400" height="869" loading="lazy" />
+              <figcaption>{s.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2>Elsewhere</h2>
+        <ul>
+          <li><a href="/protocol">The RUBP protocol specification</a> — the wire format, published in full</li>
+          <li><a href="/ports">Ports</a> — the vintage machines being written, and their source</li>
+          <li><a href="/privacy">Privacy policy</a> — short, because the app collects nothing</li>
+        </ul>
+      </section>
+
+      <p class="back-link"><a href="/">&lsaquo; Back to Rachel</a></p>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .press {
+    background: var(--felt-deep);
+    padding: 4rem 0;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    margin-bottom: 1rem;
+  }
+
+  .lede { margin-bottom: 3rem; }
+
+  section { margin-bottom: 3rem; }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  h3 {
+    font-size: 1rem;
+    margin: 1.5rem 0 0.5rem;
+    color: var(--text-muted);
+  }
+
+  p { color: var(--text-muted); margin-bottom: 1rem; }
+
+  dl { display: grid; gap: 0.75rem; }
+
+  dl > div {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 1rem;
+  }
+
+  dt { color: var(--text); font-weight: 600; }
+  dd { color: var(--text-muted); }
+
+  /* Quoted so it reads as liftable text rather than as the page talking. */
+  blockquote {
+    background: rgba(255, 255, 255, 0.045);
+    border-left: 3px solid rgba(255, 255, 255, 0.22);
+    border-radius: 0.4rem;
+    padding: 1rem 1.25rem;
+    color: var(--text-muted);
+  }
+
+  blockquote p { margin-bottom: 0.75rem; }
+  blockquote p:last-child { margin-bottom: 0; }
+
+  .icon { margin-bottom: 2rem; }
+
+  .icon img {
+    width: 128px;
+    height: 128px;
+    border-radius: 28px;
+  }
+
+  .shots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .shots img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  figcaption {
+    margin-top: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+  }
+
+  ul { color: var(--text-muted); margin-left: 1.25rem; }
+  li { margin-bottom: 0.5rem; }
+
+  .back-link {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  @media (max-width: 520px) {
+    dl > div { grid-template-columns: 1fr; gap: 0.15rem; }
+  }
+</style>

@@ -33,11 +33,15 @@ fi
 # iPad shot is the one wide image on the page and carries more detail.
 SHOTS=(
   "iphone-6.9-02-table.png:shot-table:400"
-  "iphone-6.9-03-table-card-selected.png:shot-play:400"
   "iphone-6.9-04-tutorial.png:shot-tutorial:400"
   "iphone-6.9-20-host-lobby.png:shot-lobby:400"
   "ipad-13-07-landscape-table.png:emissary-table:1400"
 )
+
+# The app icon, taken from the iOS asset catalogue rather than the screenshot
+# library - it is not a screenshot and nothing captures it. 512 is enough for
+# a press page; the shipping 1024 original is what a publication would be sent.
+ICON_SRC="${ICON_SRC:-$HOME/Projects/Rachel/rachel-ios/RachelApp/RachelApp/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png}"
 
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
@@ -60,6 +64,15 @@ for entry in "${SHOTS[@]}"; do
     "$(sips -g pixelWidth -g pixelHeight "$OUT/$name.webp" | awk '/pixel/{printf "%sx", $2}' | sed 's/x$//')" \
     "$(( $(stat -f%z "$OUT/$name.webp") / 1024 ))"
 done
+
+if [ -f "$ICON_SRC" ]; then
+  sips --resampleWidth 512 "$ICON_SRC" --out "$tmp/icon.png" > /dev/null
+  cwebp -quiet -q 90 "$tmp/icon.png" -o "$OUT/app-icon.webp"
+  printf "  %-22s %s  %sKB\n" "app-icon.webp" "512x512" \
+    "$(( $(stat -f%z "$OUT/app-icon.webp") / 1024 ))"
+else
+  echo "  app-icon.webp SKIPPED - no icon at $ICON_SRC" >&2
+fi
 
 # The social preview card, rendered from scripts/og-card.html so it stays in
 # step with the site's fonts, felt and hero shot instead of being an exported

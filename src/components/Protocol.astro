@@ -1,0 +1,107 @@
+---
+// The section that turns "a ZX Spectrum can play against an iPhone" from an
+// assertion into a specification. Every figure here is a design constraint
+// lifted from PROTOCOL.md, not a rounded-off marketing number - which is why
+// the page can afford to link straight to the spec underneath it.
+const FACTS = [
+  { figure: '64', unit: 'bytes', body: 'Every message, fixed. No length prefixes, no variable-length parsing, nothing to allocate.' },
+  { figure: '<2', unit: 'KB', body: 'The protocol handling code an 8-bit machine needs. It has to fit alongside the game, not instead of it.' },
+  { figure: '3', unit: 'CPUs', body: 'Z80, 6502 and 68000 assembly, from the first draft. The format is what it is because they have to parse it.' },
+  { figure: '1', unit: 'spec', body: 'One document every client is checked against, with shared conformance vectors each one runs.' },
+];
+---
+
+<section class="protocol">
+  <div class="container">
+    <h2>The bit that makes it possible</h2>
+    <p class="intro">
+      A 1982 machine cannot be handed a JSON payload and asked to cope. So the
+      wire format was designed for the oldest thing that has to speak it, and
+      everything modern speaks it too — the iPhone in the screenshots above is
+      talking the same protocol a Spectrum will.
+    </p>
+
+    <div class="facts">
+      {FACTS.map((f) => (
+        <article class="fact">
+          <p class="figure">{f.figure}<span class="unit">{f.unit}</span></p>
+          <p class="body">{f.body}</p>
+        </article>
+      ))}
+    </div>
+
+    <p class="note">
+      It is called RUBP — the Rachel Unified Binary Protocol — and it is
+      published in full, because a specification nobody can read is not a
+      specification. <a href="/protocol">Read the spec</a>, or see
+      <a href="/ports">which machines are being written</a>.
+    </p>
+  </div>
+</section>
+
+<style>
+  .protocol {
+    background: var(--felt-deep);
+    padding: 5rem 0;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 4.5vw, 2.75rem);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .intro {
+    text-align: center;
+    max-width: 44rem;
+    margin: 0 auto 2.5rem;
+    color: var(--text-muted);
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .fact {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.045);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .figure {
+    font-family: var(--font-display);
+    font-size: 2.75rem;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .unit {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    margin-left: 0.3rem;
+  }
+
+  .body {
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+  }
+
+  .note {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    max-width: 42rem;
+    margin-inline: auto;
+  }
+</style>

@@ -10,6 +10,9 @@
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://rachel.stevehill.xyz/</loc></url>
+  <url><loc>https://rachel.stevehill.xyz/protocol</loc></url>
+  <url><loc>https://rachel.stevehill.xyz/ports</loc></url>
+  <url><loc>https://rachel.stevehill.xyz/press</loc></url>
   <url><loc>https://rachel.stevehill.xyz/support</loc></url>
   <url><loc>https://rachel.stevehill.xyz/privacy</loc></url>
   <url><loc>https://rachel.stevehill.xyz/terms</loc></url>

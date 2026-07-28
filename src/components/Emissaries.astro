@@ -1,7 +1,11 @@
 ---
+// Machines with a port actually being written, not a wishlist. "+25 more"
+// used to sit at the end of this row, which implied thirty-three - and now
+// that /ports enumerates every one of them with a link to its source, a
+// reader can count. Sixteen is a better number anyway, because it is true.
 const PLATFORMS = [
-  'ZX Spectrum', 'Commodore 64', 'Amiga', 'NES', 'Game Boy',
-  'Atari ST', 'Apple II', 'MS-DOS', '+25 more',
+  'ZX Spectrum', 'Commodore 64', 'Amiga', 'BBC Micro', 'NES',
+  'Game Boy', 'MSX', 'Master System',
 ];
 
 // Names, universe codes, lore and accent colours are taken verbatim from
@@ -65,10 +69,11 @@ const CAST = [
 
     <div class="platforms">
       {PLATFORMS.map((p) => <span>{p}</span>)}
+      <a href="/ports" class="more">and eight more &rsaquo;</a>
     </div>
     <p class="note last">
-      Same rules. Same 64-byte protocol. A ZX Spectrum can play against an
-      iPhone. This is the plan.
+      Same rules, same 64-byte protocol, whatever the machine. That part is
+      not a wish — it is written down, and it is next.
     </p>
   </div>
 </section>
@@ -162,6 +167,23 @@ const CAST = [
     justify-content: center;
     gap: 0.6rem;
     margin-bottom: 1.5rem;
+  }
+
+  /* The link takes the chips' shape so the row reads as one set, with the
+     last item being the way into the rest. */
+  .platforms .more {
+    padding: 0.35rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 1rem;
+    font-size: 0.8125rem;
+    text-decoration: none;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .platforms .more:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: var(--text);
   }
 
   .platforms span {

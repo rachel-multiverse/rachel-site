@@ -1,0 +1,204 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Every machine here has a public repository with assembly in it. The state
+// column is deliberately blunt: none of these has a release, so none of them
+// claims one. "Written" means source exists and builds are described in the
+// repo's Makefile; it does not mean anyone has played a game on the hardware.
+//
+// The CPU and networking columns come from each repo's own description rather
+// than from memory - the networking hardware in particular is the interesting
+// part, because it is the reason these are possible at all. A Spectrum cannot
+// reach a Bonjour service without something like a Spectranet in the back.
+//
+// Add a machine here when its repository goes public, and change its state
+// when there is something to download. Overstating this page is the one thing
+// that would make it worthless.
+const MACHINES = [
+  { name: 'ZX Spectrum',      cpu: 'Z80',      net: 'Next WiFi, Spectranet', repo: 'rachel-sinclair-zx-spectrum', year: 1982 },
+  { name: 'Commodore 64',     cpu: '6502',     net: 'Zimodem WiFi',          repo: 'rachel-commodore-64',         year: 1982 },
+  { name: 'Commodore VIC-20', cpu: '6502',     net: '—',                     repo: 'rachel-commodore-vic20',      year: 1980 },
+  { name: 'Commodore Amiga',  cpu: '68000',    net: '—',                     repo: 'rachel-commodore-amiga',      year: 1985 },
+  { name: 'BBC Micro',        cpu: '6502',     net: 'WiFi',                  repo: 'rachel-acorn-bbc',            year: 1981 },
+  { name: 'Acorn Electron',   cpu: '6502',     net: 'Plus 1 serial',         repo: 'rachel-acorn-electron',       year: 1983 },
+  { name: 'Atari 8-bit',      cpu: '6502',     net: 'FujiNet',               repo: 'rachel-atari-800',            year: 1979 },
+  { name: 'Atari 7800',       cpu: '6502',     net: '—',                     repo: 'rachel-atari-7800',           year: 1986 },
+  { name: 'Oric Atmos',       cpu: '6502',     net: 'VIA serial',            repo: 'rachel-oric',                 year: 1984 },
+  { name: 'Dragon 32 / CoCo', cpu: '6809',     net: 'DragonWiFi',            repo: 'rachel-dragon-32',            year: 1982 },
+  { name: 'MSX',              cpu: 'Z80',      net: 'GR8NET UNAPI',          repo: 'rachel-msx',                  year: 1983 },
+  { name: 'ColecoVision',     cpu: 'Z80',      net: '—',                     repo: 'rachel-coleco-colecovision',  year: 1982 },
+  { name: 'Sega Master System', cpu: 'Z80',    net: '—',                     repo: 'rachel-sega-mastersystem',    year: 1985 },
+  { name: 'Sega Game Gear',   cpu: 'Z80',      net: '—',                     repo: 'rachel-sega-gamegear',        year: 1990 },
+  { name: 'Nintendo NES',     cpu: '6502',     net: '—',                     repo: 'rachel-nintendo-nes',         year: 1983 },
+  { name: 'Nintendo Game Boy', cpu: 'LR35902', net: '—',                     repo: 'rachel-nintendo-gameboy',     year: 1989 },
+];
+
+const ORG = 'https://github.com/rachel-multiverse';
+---
+
+<Layout
+  title="Ports - Rachel"
+  description="Rachel is being written for sixteen vintage machines in Z80, 6502, 6809 and 68000 assembly, all speaking the same 64-byte protocol as the iOS app."
+>
+  <main class="ports">
+    <div class="container">
+      <h1>One card game, every machine</h1>
+
+      <p class="lede">
+        Sixteen machines, in Z80, 6502, 6809 and 68000 assembly, all speaking
+        the same <a href="/protocol">64-byte protocol</a> as the iPhone app.
+        Every one of them is a public repository you can read today.
+      </p>
+
+      <p class="honest">
+        <strong>None of these has been released.</strong> Source exists and
+        builds are described, but nothing here has been played on real
+        hardware and there is nothing to download yet. This page says what is
+        written, not what is finished — and it will change when that does.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Machine</th>
+              <th>CPU</th>
+              <th>Networking</th>
+              <th>Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            {MACHINES.map((m) => (
+              <tr>
+                <td class="machine">{m.name} <span class="year">{m.year}</span></td>
+                <td><code>{m.cpu}</code></td>
+                <td class="net">{m.net}</td>
+                <td><a href={`${ORG}/${m.repo}`}>repo &nearr;</a></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <section>
+        <h2>The dashes in that table</h2>
+        <p>
+          A machine with a dash has no networking answer yet. A Spectrum needs
+          a Spectranet or a Next; an Atari needs a FujiNet; a Dragon needs a
+          DragonWiFi. Where that hardware exists the port can be finished;
+          where it doesn't, it waits for someone to solve it.
+        </p>
+      </section>
+
+      <section>
+        <h2>Writing one yourself</h2>
+        <p>
+          The <a href="/protocol">specification</a> is published in full, and
+          each client repository carries a conformance harness with shared
+          test vectors — the same message fixtures every port is checked
+          against, so a new client can prove itself against the format before
+          it ever reaches a real game.
+        </p>
+        <p>
+          If a machine you love is missing, it is missing because nobody has
+          started it.
+        </p>
+      </section>
+
+      <p class="back-link"><a href="/">&lsaquo; Back to Rachel</a></p>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .ports {
+    background: var(--felt-deep);
+    padding: 4rem 0;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+
+  .lede {
+    font-size: 1.0625rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .honest {
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.045);
+    border-left: 3px solid rgba(255, 255, 255, 0.25);
+    border-radius: 0.4rem;
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+  }
+
+  .honest strong { color: var(--text); }
+
+  /* The table is four columns of short values; on a phone it still needs to
+     scroll rather than force the page sideways. */
+  .table-wrap {
+    overflow-x: auto;
+    margin-bottom: 3rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    white-space: nowrap;
+  }
+
+  th { color: var(--text); font-weight: 600; }
+  td { color: var(--text-muted); }
+
+  .machine { color: var(--text); }
+
+  .year {
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+    margin-left: 0.35rem;
+  }
+
+  .net { font-size: 0.875rem; }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.8125rem;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.15em 0.45em;
+    border-radius: 0.25rem;
+  }
+
+  section { margin-bottom: 2.5rem; }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p { color: var(--text-muted); margin-bottom: 1rem; }
+
+  .back-link {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+</style>
