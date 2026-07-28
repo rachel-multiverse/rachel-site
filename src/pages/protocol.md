@@ -5,14 +5,14 @@
 # the source of truth. Edits here are overwritten on the next run; make them
 # there instead.
 #
-# Source revision: d00432f
+# Source revision: 8216409
 layout: ../layouts/DocLayout.astro
 title: RUBP Protocol - Rachel
 description: The Rachel Unified Binary Protocol - fixed 64-byte messages, big-endian, parseable in Z80, 6502 and 68000 assembly. The wire format every Rachel client speaks.
-sourceRevision: "d00432f"
+sourceRevision: "8216409"
 # Quoted, or YAML reads a bare 2026-07-23 as a timestamp and the page prints
 # "2026-07-23T00:00:00" at the foot of the specification.
-sourceDate: "2026-07-23"
+sourceDate: "2026-07-28"
 ---
 
 # RUBP Protocol Specification v1
@@ -34,13 +34,38 @@ draft.
 - Big-endian byte order (network standard)
 - Implementable with <2KB of protocol handling code on 8-bit systems
 
-### Single player everywhere, multiplayer over the network only
+### Clients render, the host decides
 
-Every platform implements the full game locally — rules engine, AI opponents,
-and deck management — and needs no network for solo play. Networked multiplayer
-is the only multiplayer mode: there is deliberately **no hot-seat / pass-and-play**.
-A single shared screen would expose every player's hand, so hidden-hand
-integrity requires one device per player, separated by the network.
+The host owns the deck, the rules and the shuffle. A client renders what it is
+told and sends back what its player pressed. **A client is not expected to
+implement the rules**, and doing so is not what conformance means — the
+conformance harness in each client repository tests messages, not rules.
+
+This is what makes *same rules everywhere* true rather than merely claimed.
+Sixteen independent reimplementations of stacking, compulsory counters and
+red-jack defence would each have to agree exactly with `RachelEngine` or a
+cross-machine game desyncs — a divergence no test suite can catch, because it
+only appears in a live game between two particular machines. One authoritative
+engine and many renderers makes divergence impossible by construction.
+
+Message design follows from this. `PLAYER_WON` carries per-seat attack totals
+precisely so a client can show end-of-game awards without replicating rules
+logic; new messages should be built the same way. The host computes, the
+payload carries, the client displays.
+
+A platform **may** additionally implement the game locally in order to offer
+solo play. iOS does, which is why the app needs no network to play alone. That
+is a platform capability, not a protocol requirement: the vintage clients do
+not have it, and a vintage machine with no host on the network has no game to
+play.
+
+### No hot-seat
+
+Networked multiplayer is the only multiplayer mode: there is deliberately **no
+hot-seat / pass-and-play**. A single shared screen would expose every player's
+hand, so hidden-hand integrity requires one device per player, separated by the
+network. This holds regardless of the above — it is a property of hidden hands,
+not of where the rules run.
 
 ## RachelSpec Alignment
 
@@ -866,6 +891,21 @@ shim; the reference assignments are authoritative.
   should use the gentler intervals under [Timing Considerations](#timing-considerations).
 - The frozen handshake, sync, and transition contracts under [`specs/`](specs/)
   are the authoritative recovery semantics.
+
+**Clarified — clients render, the host decides.** The Design Constraints
+section previously opened by saying every platform implements the full game
+locally, with its own rules engine, AI and deck management, and needs no
+network for solo play. That was never true of anything but iOS: every vintage
+client is render-only, and this document already assumed as much elsewhere —
+`PLAYER_WON`'s attack totals exist so clients can show awards *without
+replicating rules logic*.
+
+**No message, field or byte changed**, so this is not a version bump and no
+client needs altering. It is the document catching up with what the wire format
+always described. If you are writing a client: you are not expected to
+implement the rules, and a platform that wants solo play implements the game
+locally as a matter of its own choosing rather than of conformance. See
+`knowledge/decisions/0003-clients-render-the-host-decides.md`.
 
 The **single source of truth is the `RachelEngine` code** (`RUBPMessage`,
 `RUBPPlatformID`, `RachelSpec`). This document tracks it; the frozen `specs/`
