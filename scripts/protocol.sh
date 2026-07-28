@@ -61,8 +61,10 @@ date="$(git -C "$DOCS" log -1 --format=%cs -- PROTOCOL.md)"
 layout: ../layouts/DocLayout.astro
 title: RUBP Protocol - Rachel
 description: The Rachel Unified Binary Protocol - fixed 64-byte messages, big-endian, parseable in Z80, 6502 and 68000 assembly. The wire format every Rachel client speaks.
-sourceRevision: $rev
-sourceDate: $date
+sourceRevision: "$rev"
+# Quoted, or YAML reads a bare 2026-07-23 as a timestamp and the page prints
+# "2026-07-23T00:00:00" at the foot of the specification.
+sourceDate: "$date"
 ---
 
 EOF

@@ -9,8 +9,10 @@
 layout: ../layouts/DocLayout.astro
 title: RUBP Protocol - Rachel
 description: The Rachel Unified Binary Protocol - fixed 64-byte messages, big-endian, parseable in Z80, 6502 and 68000 assembly. The wire format every Rachel client speaks.
-sourceRevision: d00432f
-sourceDate: 2026-07-23
+sourceRevision: "d00432f"
+# Quoted, or YAML reads a bare 2026-07-23 as a timestamp and the page prints
+# "2026-07-23T00:00:00" at the foot of the specification.
+sourceDate: "2026-07-23"
 ---
 
 # RUBP Protocol Specification v1
