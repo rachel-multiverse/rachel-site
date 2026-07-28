@@ -5,11 +5,11 @@
 # the source of truth. Edits here are overwritten on the next run; make them
 # there instead.
 #
-# Source revision: 8216409
+# Source revision: 2e87706
 layout: ../layouts/DocLayout.astro
 title: RUBP Protocol - Rachel
 description: The Rachel Unified Binary Protocol - fixed 64-byte messages, big-endian, parseable in Z80, 6502 and 68000 assembly. The wire format every Rachel client speaks.
-sourceRevision: "8216409"
+sourceRevision: "2e87706"
 # Quoted, or YAML reads a bare 2026-07-23 as a timestamp and the page prints
 # "2026-07-23T00:00:00" at the foot of the specification.
 sourceDate: "2026-07-28"
@@ -87,12 +87,12 @@ Where this document names stable identifiers such as `not_your_turn` or
 
 Recovery semantics are frozen separately in:
 
-- [specs/rachel-handshake-v1.md](specs/rachel-handshake-v1.md)
-- [specs/rachel-sync-v1.md](specs/rachel-sync-v1.md)
-- [specs/rachel-transitions-v1.md](specs/rachel-transitions-v1.md)
+- [specs/rachel-handshake-v1.md](https://github.com/rachel-multiverse/protocol/blob/main/specs/rachel-handshake-v1.md)
+- [specs/rachel-sync-v1.md](https://github.com/rachel-multiverse/protocol/blob/main/specs/rachel-sync-v1.md)
+- [specs/rachel-transitions-v1.md](https://github.com/rachel-multiverse/protocol/blob/main/specs/rachel-transitions-v1.md)
 
 To prove an implementation against the reference, validate it with the golden
-wire vectors in [specs/rubp-conformance-v1.md](specs/rubp-conformance-v1.md).
+wire vectors in [specs/rubp-conformance-v1.md](https://github.com/rachel-multiverse/protocol/blob/main/specs/rubp-conformance-v1.md).
 
 ## Message Format
 
@@ -889,7 +889,7 @@ shim; the reference assignments are authoritative.
   the timeout are treated as disconnected. The reference iOS client beats every
   ~2s and times out at ~8s on fast transports; vintage clients on slow links
   should use the gentler intervals under [Timing Considerations](#timing-considerations).
-- The frozen handshake, sync, and transition contracts under [`specs/`](specs/)
+- The frozen handshake, sync, and transition contracts under [`specs/`](https://github.com/rachel-multiverse/protocol/tree/main/specs)
   are the authoritative recovery semantics.
 
 **Clarified — clients render, the host decides.** The Design Constraints
@@ -904,8 +904,8 @@ replicating rules logic*.
 client needs altering. It is the document catching up with what the wire format
 always described. If you are writing a client: you are not expected to
 implement the rules, and a platform that wants solo play implements the game
-locally as a matter of its own choosing rather than of conformance. See
-`knowledge/decisions/0003-clients-render-the-host-decides.md`.
+locally as a matter of its own choosing rather than of conformance. The reasoning is recorded as decision 0003, "Clients render, the host
+decides".
 
 The **single source of truth is the `RachelEngine` code** (`RUBPMessage`,
 `RUBPPlatformID`, `RachelSpec`). This document tracks it; the frozen `specs/`

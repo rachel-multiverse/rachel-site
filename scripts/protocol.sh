@@ -4,6 +4,14 @@
 #
 #   ./scripts/protocol.sh [path-to-docs-repo]
 #
+# ## Where the source is
+#
+# `rachel-multiverse/protocol`, public, cloned beside this repo as ../protocol.
+# It used to be the private `docs` repo - which is why the `specs/` links in
+# the published page pointed at nothing. They are rewritten below to the
+# public repository, because a relative link that works in a checkout is a
+# 404 on a website.
+#
 # ## Why this is generated and not written
 #
 # `docs/PROTOCOL.md` is the cross-platform source of truth, and the decision
@@ -32,21 +40,22 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-DOCS="${1:-../docs}"
-SRC="$DOCS/PROTOCOL.md"
+SPEC_REPO="${1:-../protocol}"
+SRC="$SPEC_REPO/PROTOCOL.md"
 OUT="src/pages/protocol.md"
+SPEC_URL="https://github.com/rachel-multiverse/protocol"
 
 if [ ! -f "$SRC" ]; then
   echo "no PROTOCOL.md at $SRC" >&2
-  echo "pass the path to the docs repo: ./scripts/protocol.sh ../docs" >&2
+  echo "clone it: git clone git@github.com:rachel-multiverse/protocol.git ../protocol" >&2
   exit 1
 fi
 
 # The revision is recorded in the page so a reader can tell which version of
 # the spec they are looking at, and so a stale copy is visible rather than
 # silent.
-rev="$(git -C "$DOCS" rev-parse --short HEAD)"
-date="$(git -C "$DOCS" log -1 --format=%cs -- PROTOCOL.md)"
+rev="$(git -C "$SPEC_REPO" rev-parse --short HEAD)"
+date="$(git -C "$SPEC_REPO" log -1 --format=%cs -- PROTOCOL.md)"
 
 {
   cat <<EOF
@@ -68,8 +77,18 @@ sourceDate: "$date"
 ---
 
 EOF
-  cat "$SRC"
+  # `specs/...` resolves inside a checkout of the protocol repo and 404s on
+  # the site, where there is no /specs/. These were live for one deploy,
+  # pointing at documents PROTOCOL.md calls the authoritative recovery
+  # semantics - the ones a port author needs most. Send them to the public
+  # repository instead.
+  # Directory link first: `[+]` on the file pattern would otherwise still
+  # match the bare `specs/` and send a directory to a /blob/ URL.
+  sed -E \
+    -e "s#\]\(specs/\)#](${SPEC_URL}/tree/main/specs)#g" \
+    -e "s#\]\((specs/[^)]+)\)#](${SPEC_URL}/blob/main/\1)#g" \
+    "$SRC"
 } > "$OUT"
 
 lines=$(wc -l < "$OUT" | tr -d ' ')
-echo "  $OUT  $lines lines, from $DOCS @ $rev ($date)"
+echo "  $OUT  $lines lines, from $SPEC_REPO @ $rev ($date)"
