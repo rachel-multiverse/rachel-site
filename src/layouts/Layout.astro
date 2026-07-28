@@ -7,6 +7,13 @@ interface Props {
 }
 
 const { title, description = "A strategic card game for iOS" } = Astro.props;
+
+// Absolute, because Open Graph consumers do not resolve relative URLs - a
+// root-relative /images/og-card.png is fetched against their own host and
+// quietly comes back 404, which is why a link can preview with a title and no
+// picture. `site` is set in astro.config.mjs.
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/images/og-card.png', Astro.site);
 ---
 
 <!doctype html>
@@ -23,7 +30,32 @@ const { title, description = "A strategic card game for iOS" } = Astro.props;
       crossorigin
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
     <title>{title}</title>
+
+    {/* Without these a shared link is a bare URL: no title card, no picture,
+        no description. For a site whose whole job before launch is to be
+        passed around, that was the largest thing missing from it.
+
+        og: is read by iMessage, Slack, Discord, WhatsApp, Mastodon, LinkedIn
+        and Facebook; twitter: only adds the large-image card on X, which
+        otherwise falls back to a small thumbnail. Both are cheap. */}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Rachel" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Rachel - shed your hand, survive the attacks, the last player standing loses" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#114526" />
   </head>
   <body>
     <slot />

@@ -1,0 +1,86 @@
+---
+// Placed directly after "How it works", because that section is where a
+// newcomer decides the game looks complicated - six special cards, stacking,
+// countering, a reverse and a suit nomination. The answer already exists in
+// the app and was only mentioned on the support page, which nobody reads
+// before buying.
+---
+
+<section class="learn">
+  <div class="container">
+    <div class="copy">
+      <h2>You don't have to read any of that</h2>
+      <p>
+        The tutorial deals you real hands and walks you through every special
+        card as it comes up — the draw twos, the skips, the jacks that attack
+        and the jacks that defend. Nothing is simulated; you are playing the
+        game while it explains itself.
+      </p>
+      <p class="aside">
+        And when a card can't be played, the app says why rather than just
+        refusing the tap.
+      </p>
+    </div>
+
+    <img
+      src="/images/shot-tutorial.webp"
+      alt="The tutorial mid-lesson, explaining a special card with a real hand dealt"
+      width="400"
+      height="869"
+      loading="lazy"
+    />
+  </div>
+</section>
+
+<style>
+  .learn {
+    background: var(--felt-surface);
+    padding: 5rem 0;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 4.5vw, 2.75rem);
+    margin-bottom: 1.25rem;
+    line-height: 1.1;
+  }
+
+  p {
+    max-width: 32rem;
+    margin-bottom: 1rem;
+  }
+
+  .aside {
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    margin-bottom: 0;
+  }
+
+  img {
+    width: min(230px, 100%);
+    height: auto;
+    border-radius: 1.4rem;
+    box-shadow: 0 0 0 7px #1c1c1e, 0 0 0 9px #3a3a3c,
+      0 20px 40px rgba(0, 0, 0, 0.45);
+  }
+
+  @media (max-width: 760px) {
+    .container {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+      gap: 2.5rem;
+    }
+    p { margin-inline: auto; }
+  }
+</style>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Hand-written, and short enough to stay that way. Four pages that change when
+  someone edits them, which is not often and never on a schedule - so there is
+  no <changefreq> or <priority> here: both are hints crawlers have long since
+  stopped believing, and a stale <lastmod> is worse than none.
+
+  Add a page, add a line. If this ever needs generating, that is the moment to
+  reach for @astrojs/sitemap, not before.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://rachel.stevehill.xyz/</loc></url>
+  <url><loc>https://rachel.stevehill.xyz/support</loc></url>
+  <url><loc>https://rachel.stevehill.xyz/privacy</loc></url>
+  <url><loc>https://rachel.stevehill.xyz/terms</loc></url>
+</urlset>

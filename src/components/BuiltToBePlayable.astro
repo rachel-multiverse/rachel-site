@@ -1,0 +1,118 @@
+---
+// Every claim here is checked against the app, because this is the section a
+// person relying on assistive technology decides on - and the one where a
+// hopeful overstatement does real harm.
+//
+//   VoiceOver announcements  Comprehension/TurnStatus.swift, GameViewModel,
+//                            Utilities/Accessibility.swift, SeatBubble
+//   Dynamic Type             39 files
+//   Reduce Motion            20 files
+//   Four-colour suits        13 files, a player setting rather than a theme
+//   Increased contrast       a second ink palette at the theme level, so it
+//                            reaches the felt as well as the card faces
+//
+// Deliberately not claimed: full Switch Control or Voice Control support, and
+// any WCAG conformance figure. Neither has been tested, so neither is said.
+const TRAITS = [
+  {
+    title: 'VoiceOver throughout',
+    body: 'Spoken announcements when an opponent plays, when the turn changes, and when the game ends — not just labels on buttons.',
+  },
+  {
+    title: 'Dynamic Type',
+    body: 'The table, the cards and the menus all scale with your preferred text size, up through the accessibility sizes.',
+  },
+  {
+    title: 'Four-colour suits',
+    body: 'Print diamonds in blue and clubs in green, so no two suits share a colour. Your choice, kept whichever theme you play in.',
+  },
+  {
+    title: 'Contrast and motion',
+    body: 'A second ink palette for Increased Contrast that covers the felt as well as the cards, and every flourish stands down for Reduce Motion.',
+  },
+];
+---
+
+<section class="playable">
+  <div class="container">
+    <h2>Built to be playable</h2>
+    <p class="intro">
+      A card game is a lot of small coloured symbols in a row, which makes it
+      an easy thing to build badly. These are settings the app follows, not
+      features it advertises and forgets.
+    </p>
+
+    <div class="traits">
+      {TRAITS.map((t) => (
+        <article class="trait">
+          <h3>{t.title}</h3>
+          <p>{t.body}</p>
+        </article>
+      ))}
+    </div>
+
+    <p class="note">
+      Something hard to use with assistive technology is a bug, and gets
+      treated as one — <a href="/support">tell us</a> and it goes to the front
+      of the queue.
+    </p>
+  </div>
+</section>
+
+<style>
+  .playable {
+    background: var(--felt-deep);
+    padding: 5rem 0;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 4.5vw, 2.75rem);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .intro {
+    text-align: center;
+    max-width: 42rem;
+    margin: 0 auto 2.5rem;
+    color: var(--text-muted);
+  }
+
+  .traits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .trait {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.045);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .trait h3 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .trait p {
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+  }
+
+  .note {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+  }
+</style>

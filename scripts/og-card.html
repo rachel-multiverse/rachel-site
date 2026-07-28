@@ -1,0 +1,97 @@
+<!doctype html>
+<!--
+  The source of the social preview card, rendered to a PNG by images.sh.
+
+  A card rather than a raw screenshot: a link posted to Slack or iMessage is
+  seen at about 500px wide, where a phone screenshot is a green sliver with
+  unreadable cards on it. This says the name and the promise at a size that
+  survives the scale-down, and shows the phone as evidence rather than as the
+  whole message.
+
+  Generated rather than drawn, so it cannot drift from the site. It pulls the
+  same font file, the same felt tokens and the same phone shot the hero uses -
+  change the palette in tokens.css and this follows. That is the whole reason
+  it is HTML and not an export from a design tool.
+
+  Exactly 1200x630, which is what Open Graph consumers crop to. Do not add a
+  scrollbar's worth of content: anything past the edge is silently cut.
+-->
+<meta charset="utf-8" />
+<style>
+  @font-face {
+    font-family: 'Playfair Display';
+    src: url('../public/fonts/playfair-display-700.woff2') format('woff2');
+    font-weight: 700;
+    font-display: block;
+  }
+
+  /* Kept in step with src/styles/tokens.css by hand, because a file:// render
+     cannot import the site's stylesheet through Astro's build. Six values. */
+  :root {
+    --felt: #1d6038;
+    --felt-light: #2e7d4f;
+    --felt-deep: #114526;
+    --text: #f4f2ec;
+    --text-muted: rgba(255, 255, 255, 0.72);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    padding: 0 80px;
+    background: radial-gradient(ellipse at 50% 30%,
+      var(--felt-light) 0%, var(--felt) 45%, var(--felt-deep) 100%);
+    color: var(--text);
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  .copy { flex: 1; }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: 132px;
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    margin-bottom: 28px;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.38);
+  }
+
+  /* No max-width: the line breaks are in the markup, and a width limit only
+     fought them - it wrapped "Survive the attacks." onto its own line and
+     turned two balanced lines into three ragged ones. */
+  .promise {
+    font-size: 34px;
+    line-height: 1.35;
+    white-space: nowrap;
+  }
+
+  .meta {
+    margin-top: 32px;
+    font-size: 23px;
+    color: var(--text-muted);
+  }
+
+  /* The same bezel the hero draws, so the phone reads as one object rather
+     than a screenshot pasted onto felt. */
+  img {
+    width: 268px;
+    height: auto;
+    border-radius: 30px;
+    box-shadow: 0 0 0 9px #1c1c1e, 0 0 0 11px #3a3a3c,
+      0 30px 60px rgba(0, 0, 0, 0.5);
+  }
+</style>
+
+<div class="copy">
+  <h1>Rachel</h1>
+  <p class="promise">Shed your hand. Survive the attacks.<br />The last player standing loses.</p>
+  <p class="meta">iPhone &amp; iPad &middot; No ads, no tracking</p>
+</div>
+<img src="../public/images/shot-table.webp" alt="" />

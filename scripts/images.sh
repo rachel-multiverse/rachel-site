@@ -61,5 +61,25 @@ for entry in "${SHOTS[@]}"; do
     "$(( $(stat -f%z "$OUT/$name.webp") / 1024 ))"
 done
 
+# The social preview card, rendered from scripts/og-card.html so it stays in
+# step with the site's fonts, felt and hero shot instead of being an exported
+# asset nobody remembers to update.
+#
+# PNG, not WebP: Open Graph consumers are old and inconsistent, and several
+# still will not fetch a WebP. This is the one image on the site whose format
+# is chosen by other people's crawlers rather than by page weight.
+CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+if [ -x "$CHROME" ]; then
+  "$CHROME" --headless --disable-gpu --hide-scrollbars \
+    --force-device-scale-factor=1 --window-size=1200,630 \
+    --default-background-color=00000000 \
+    --screenshot="$OUT/og-card.png" "scripts/og-card.html" 2> /dev/null
+  printf "  %-22s %s  %sKB\n" "og-card.png" \
+    "$(sips -g pixelWidth -g pixelHeight "$OUT/og-card.png" | awk '/pixel/{printf "%sx", $2}' | sed 's/x$//')" \
+    "$(( $(stat -f%z "$OUT/og-card.png") / 1024 ))"
+else
+  echo "  og-card.png SKIPPED - no Chrome to render it with; the committed one stands" >&2
+fi
+
 echo
-echo "total: $(( $(cat "$OUT"/*.webp | wc -c) / 1024 ))KB across $(ls "$OUT"/*.webp | wc -l | tr -d ' ') files"
+echo "total: $(( $(cat "$OUT"/*.webp "$OUT"/og-card.png 2> /dev/null | wc -c) / 1024 ))KB across $(ls "$OUT"/*.webp "$OUT"/og-card.png 2> /dev/null | wc -l | tr -d ' ') files"
