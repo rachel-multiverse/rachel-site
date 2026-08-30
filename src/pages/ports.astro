@@ -1,39 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// Every machine here has a public repository with assembly in it. The state
-// column is deliberately blunt: none of these has a release, so none of them
-// claims one. "Written" means source exists and builds are described in the
-// repo's Makefile; it does not mean anyone has played a game on the hardware.
-//
-// The CPU and networking columns come from each repo's own description rather
-// than from memory - the networking hardware in particular is the interesting
-// part, because it is the reason these are possible at all. A Spectrum cannot
-// reach a Bonjour service without something like a Spectranet in the back.
-//
-// Add a machine here when its repository goes public, and change its state
-// when there is something to download. Overstating this page is the one thing
-// that would make it worthless.
 const MACHINES = [
-  { name: 'ZX Spectrum',      cpu: 'Z80',      net: 'Next WiFi, Spectranet', repo: 'rachel-sinclair-zx-spectrum', year: 1982 },
-  { name: 'Commodore 64',     cpu: '6502',     net: 'Zimodem WiFi',          repo: 'rachel-commodore-64',         year: 1982 },
-  { name: 'Commodore VIC-20', cpu: '6502',     net: '—',                     repo: 'rachel-commodore-vic20',      year: 1980 },
-  { name: 'Commodore Amiga',  cpu: '68000',    net: '—',                     repo: 'rachel-commodore-amiga',      year: 1985 },
-  { name: 'BBC Micro',        cpu: '6502',     net: 'WiFi',                  repo: 'rachel-acorn-bbc',            year: 1981 },
-  { name: 'Acorn Electron',   cpu: '6502',     net: 'Plus 1 serial',         repo: 'rachel-acorn-electron',       year: 1983 },
-  { name: 'Atari 8-bit',      cpu: '6502',     net: 'FujiNet',               repo: 'rachel-atari-800',            year: 1979 },
-  { name: 'Atari 7800',       cpu: '6502',     net: '—',                     repo: 'rachel-atari-7800',           year: 1986 },
-  { name: 'Oric Atmos',       cpu: '6502',     net: 'VIA serial',            repo: 'rachel-oric',                 year: 1984 },
-  { name: 'Dragon 32 / CoCo', cpu: '6809',     net: 'DragonWiFi',            repo: 'rachel-dragon-32',            year: 1982 },
-  { name: 'MSX',              cpu: 'Z80',      net: 'GR8NET UNAPI',          repo: 'rachel-msx',                  year: 1983 },
-  { name: 'ColecoVision',     cpu: 'Z80',      net: '—',                     repo: 'rachel-coleco-colecovision',  year: 1982 },
-  { name: 'Sega Master System', cpu: 'Z80',    net: '—',                     repo: 'rachel-sega-mastersystem',    year: 1985 },
-  { name: 'Sega Game Gear',   cpu: 'Z80',      net: '—',                     repo: 'rachel-sega-gamegear',        year: 1990 },
-  { name: 'Nintendo NES',     cpu: '6502',     net: '—',                     repo: 'rachel-nintendo-nes',         year: 1983 },
-  { name: 'Nintendo Game Boy', cpu: 'LR35902', net: '—',                     repo: 'rachel-nintendo-gameboy',     year: 1989 },
+  { name: 'ZX Spectrum', net: 'Next WiFi / Spectranet', repo: 'rachel-sinclair-zx-spectrum', evidence: 'Build + protocol', hardware: 'Real adapter path' },
+  { name: 'Commodore 64', net: 'Ultimate-II / Hayes modem', repo: 'rachel-c64', evidence: 'Build + protocol', hardware: 'Real adapter path' },
+  { name: 'Commodore VIC-20', net: 'Hayes user-port modem', repo: 'rachel-vic20', evidence: 'CI artifact', hardware: 'Real adapter path' },
+  { name: 'Commodore Amiga', net: 'Hayes serial modem', repo: 'rachel-amiga', evidence: 'Build + protocol', hardware: 'Real adapter path' },
+  { name: 'BBC Micro', net: 'User-port WiFi bridge', repo: 'rachel-bbc-micro', evidence: 'CI artifact', hardware: 'Real adapter path' },
+  { name: 'Acorn Electron', net: 'WiFi expansion', repo: 'rachel-electron', evidence: 'CI artifact', hardware: 'Real adapter path' },
+  { name: 'Atari 8-bit', net: 'FujiNet', repo: 'rachel-atari8', evidence: 'CI artifact', hardware: 'Real adapter path' },
+  { name: 'Atari 7800', net: 'Cartridge coprocessor', repo: 'rachel-atari-7800', evidence: 'Build only', hardware: 'Design needed' },
+  { name: 'Oric Atmos', net: '$031C 6551 + Hayes modem', repo: 'rachel-oric', evidence: 'CI transport build', hardware: 'Prototype needed' },
+  { name: 'Dragon 32 / CoCo', net: 'Serial / DragonWiFi', repo: 'rachel-dragon', evidence: 'Build + protocol', hardware: 'Model dependent' },
+  { name: 'MSX', net: 'GR8NET TCP/IP UNAPI', repo: 'rachel-msx', evidence: 'Emulator protocol', hardware: 'Real adapter path' },
+  { name: 'ColecoVision', net: '$50–$52 expansion FIFO', repo: 'rachel-coleco-colecovision', evidence: 'Build only', hardware: 'Prototype needed' },
+  { name: 'Sega Master System', net: 'Cartridge adapter', repo: 'rachel-sega-mastersystem', evidence: 'CI artifact', hardware: 'Prototype needed' },
+  { name: 'Sega Game Gear', net: 'Cartridge adapter', repo: 'rachel-sega-gamegear', evidence: 'CI artifact', hardware: 'Prototype needed' },
+  { name: 'Nintendo NES', net: 'Controller-port bridge', repo: 'rachel-nintendo-nes', evidence: 'Emulator protocol', hardware: 'Prototype needed' },
+  { name: 'Nintendo Game Boy', net: 'Buffered link bridge', repo: 'rachel-nintendo-gameboy', evidence: 'CI artifact', hardware: 'Prototype needed' },
 ];
 
 const ORG = 'https://github.com/rachel-multiverse';
+const TEST_REPORT = `${ORG}/protocol/issues/new?template=hardware-validation.yml`;
 ---
 
 <Layout
@@ -51,29 +39,35 @@ const ORG = 'https://github.com/rachel-multiverse';
       </p>
 
       <p class="honest">
-        <strong>None of these has been released.</strong> Source exists and
-        builds are described, but nothing here has been played on real
-        hardware and there is nothing to download yet. This page says what is
-        written, not what is finished — and it will change when that does.
+        <strong>No vintage client is released or hardware-verified yet.</strong>
+        CI artifacts are test builds, not releases. “Emulator protocol” proves
+        message compatibility, not the screen, controls, adapter, or a physical
+        machine. The labels below say what evidence actually exists.
       </p>
 
       <div class="table-wrap">
         <table>
+          <caption>Software evidence and physical-network status for each vintage Rachel client</caption>
           <thead>
             <tr>
               <th>Machine</th>
-              <th>CPU</th>
               <th>Networking</th>
-              <th>Source</th>
+              <th>Evidence</th>
+              <th>Hardware</th>
+              <th>Links</th>
             </tr>
           </thead>
           <tbody>
             {MACHINES.map((m) => (
               <tr>
-                <td class="machine">{m.name} <span class="year">{m.year}</span></td>
-                <td><code>{m.cpu}</code></td>
+                <td class="machine">{m.name}</td>
                 <td class="net">{m.net}</td>
-                <td><a href={`${ORG}/${m.repo}`}>repo &nearr;</a></td>
+                <td><span class="badge evidence">{m.evidence}</span></td>
+                <td><span class="badge hardware">{m.hardware}</span></td>
+                <td class="links">
+                  <a href={`${ORG}/${m.repo}`}>source</a>
+                  <a href={`${ORG}/${m.repo}/actions`}>builds</a>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -105,12 +99,20 @@ const ORG = 'https://github.com/rachel-multiverse';
       </section>
 
       <section>
-        <h2>The dashes in that table</h2>
+        <h2>What the labels mean</h2>
         <p>
-          A machine with a dash has no networking answer yet. A Spectrum needs
-          a Spectranet or a Next; an Atari needs a FujiNet; a Dragon needs a
-          DragonWiFi. Where that hardware exists the port can be finished;
-          where it doesn't, it waits for someone to solve it.
+          <strong>CI artifact</strong> means GitHub assembled a downloadable
+          test image. <strong>Build + protocol</strong> adds fixture or harness
+          checks. <strong>Emulator protocol</strong> executes those checks in
+          Emu198x. Hardware labels are separate on purpose: a green software
+          build does not prove voltage levels, timing, cabling, modem firmware,
+          controls, or a complete game on the original machine.
+        </p>
+        <p class="tester-cta">
+          Own one of these machines or adapters?
+          <a href={TEST_REPORT}>Run the five-minute smoke test and report it</a>.
+          The form asks for reproducible, privacy-safe evidence and credits the
+          exact hardware, firmware, client, and server revisions.
         </p>
       </section>
 
@@ -124,8 +126,9 @@ const ORG = 'https://github.com/rachel-multiverse';
           prove itself against the format before it ever reaches a real game.
         </p>
         <p>
-          Five of the sixteen clients above carry a conformance harness today.
-          The rest do not yet, which is a gap rather than a decision.
+          Build pages linked above contain the current test artifacts where a
+          repository uploads them. They expire with GitHub's artifact retention
+          window; durable downloads will arrive with actual releases.
         </p>
         <p>
           If a machine you love is missing, it is missing because nobody has
@@ -186,6 +189,18 @@ const ORG = 'https://github.com/rachel-multiverse';
     font-size: 0.9375rem;
   }
 
+  caption {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   th, td {
     text-align: left;
     padding: 0.6rem 0.75rem;
@@ -198,13 +213,37 @@ const ORG = 'https://github.com/rachel-multiverse';
 
   .machine { color: var(--text); }
 
-  .year {
-    color: var(--text-muted);
-    font-size: 0.8125rem;
-    margin-left: 0.35rem;
+  .net { font-size: 0.875rem; }
+
+  .badge {
+    display: inline-block;
+    padding: 0.18rem 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    line-height: 1.35;
   }
 
-  .net { font-size: 0.875rem; }
+  .evidence { color: var(--text); background: rgba(255, 255, 255, 0.06); }
+  .hardware { color: var(--text-muted); }
+
+  .links {
+    display: flex;
+    gap: 0.7rem;
+  }
+
+  .links a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    touch-action: manipulation;
+  }
+
+  .tester-cta {
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 0.4rem;
+  }
 
   code {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
