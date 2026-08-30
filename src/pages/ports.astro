@@ -4,7 +4,7 @@ import Layout from '../layouts/Layout.astro';
 const MACHINES = [
   { name: 'ZX Spectrum', net: 'Next WiFi / Spectranet', repo: 'rachel-sinclair-zx-spectrum', evidence: 'Build + protocol', hardware: 'Real adapter path' },
   { name: 'Commodore 64', net: 'Ultimate-II / Hayes modem', repo: 'rachel-c64', evidence: 'Build + protocol', hardware: 'Real adapter path' },
-  { name: 'Commodore VIC-20', net: 'Hayes user-port modem', repo: 'rachel-commodore-vic20', evidence: 'Build + protocol', hardware: 'Real adapter path' },
+  { name: 'Commodore VIC-20', net: 'Hayes user-port modem', repo: 'rachel-commodore-vic20', evidence: 'Emulator boot + protocol', hardware: 'Real adapter path' },
   { name: 'Commodore Amiga', net: 'Hayes serial modem', repo: 'rachel-amiga', evidence: 'Build + protocol', hardware: 'Real adapter path' },
   { name: 'BBC Micro', net: 'User-port WiFi bridge', repo: 'rachel-bbc-micro', evidence: 'CI artifact', hardware: 'Real adapter path' },
   { name: 'Acorn Electron', net: 'WiFi expansion', repo: 'rachel-electron', evidence: 'CI artifact', hardware: 'Real adapter path' },
@@ -103,10 +103,12 @@ const TEST_REPORT = `${ORG}/protocol/issues/new?template=hardware-validation.yml
         <p>
           <strong>CI artifact</strong> means GitHub assembled a downloadable
           test image. <strong>Build + protocol</strong> adds fixture or harness
-          checks. <strong>Emulator protocol</strong> executes those checks in
-          Emu198x. Hardware labels are separate on purpose: a green software
-          build does not prove voltage levels, timing, cabling, modem firmware,
-          controls, or a complete game on the original machine.
+          checks. <strong>Emulator boot + protocol</strong> also proves the real
+          artifact reaches and renders its client screen. <strong>Emulator
+          protocol</strong> executes message checks in Emu198x. Hardware labels
+          are separate on purpose: a green software build does not prove voltage
+          levels, timing, cabling, modem firmware, controls, or a complete game
+          on the original machine.
         </p>
         <p class="tester-cta">
           Own one of these machines or adapters?
