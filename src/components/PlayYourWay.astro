@@ -1,14 +1,8 @@
 ---
 const MODES = [
-  { title: 'Solo', body: 'Face the emissaries of the multiverse, at Easy, Medium, or Hard.' },
-  { title: 'Local multiplayer', body: 'Play with friends nearby over Game Center or your local network.' },
-  // Cross-device play works today - an iPhone hosting and an iPad joining is a
-  // real configuration, not a roadmap item, and the lobby shot below is one.
-  // The multiverse claim further up is about *other machines* and is correctly
-  // marked as a plan; this is the part that already ships, and saying nothing
-  // about it undersold the app.
-  { title: 'iPhone & iPad together', body: 'One universal app, and either can host. On iPad the table opens into a full horseshoe.' },
-  { title: 'Online', body: 'Coming soon: play with anyone, anywhere.', soon: true },
+  { title: 'A table to yourself', body: 'Play offline against computer opponents. Choose from three difficulties, and leave a solo hand to finish later.' },
+  { title: 'Friends nearby', body: 'Bring 2-8 players together on the same local network. No account or internet needed.' },
+  { title: 'iPhone & iPad together', body: 'Play on either device, in portrait or landscape. Friends can join the same local game from an iPhone or iPad.' },
 ];
 ---
 
@@ -17,7 +11,7 @@ const MODES = [
     <h2>Play your way</h2>
     <div class="modes">
       {MODES.map((m) => (
-        <article class:list={['mode', m.soon && 'soon']}>
+        <article class="mode">
           <h3>{m.title}</h3>
           <p>{m.body}</p>
         </article>
@@ -33,8 +27,7 @@ const MODES = [
         loading="lazy"
       />
       <figcaption>
-        Seats nobody claims are played by an emissary, so a game never waits
-        for a fourth.
+        Computer opponents fill the spare seats. Two friends can have a full table.
       </figcaption>
     </figure>
   </div>
@@ -82,8 +75,6 @@ const MODES = [
     color: var(--text-muted);
     font-size: 0.9375rem;
   }
-
-  .mode.soon { opacity: 0.68; }
 
   .lobby {
     margin: 3rem auto 0;

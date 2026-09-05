@@ -3,8 +3,8 @@ import Layout from '../layouts/Layout.astro';
 
 const MACHINES = [
   { name: 'ZX Spectrum', net: 'Next WiFi / Spectranet', repo: 'rachel-sinclair-zx-spectrum', evidence: 'Build + protocol', hardware: 'Real adapter path' },
-  { name: 'Commodore 64', net: 'Ultimate-II / Hayes modem', repo: 'rachel-c64', evidence: 'Build + protocol', hardware: 'Real adapter path' },
-  { name: 'Commodore VIC-20', net: 'Hayes user-port modem', repo: 'rachel-commodore-vic20', evidence: 'Emulator boot + protocol', hardware: 'Real adapter path' },
+  { name: 'Commodore 64', net: 'Offline solo / Ultimate / user-port modem', repo: 'rachel-commodore-64', evidence: 'Solo + reconnect in emulation', hardware: 'Physical evidence pending' },
+  { name: 'Commodore VIC-20', net: 'Offline solo / ESP-AT user-port modem', repo: 'rachel-commodore-vic20', evidence: 'v1.0.0: solo + online in emulation', hardware: 'Physical testing pending' },
   { name: 'Commodore Amiga', net: 'Hayes serial modem', repo: 'rachel-amiga', evidence: 'Build + protocol', hardware: 'Real adapter path' },
   { name: 'BBC Micro', net: 'User-port WiFi bridge', repo: 'rachel-bbc-micro', evidence: 'CI artifact', hardware: 'Real adapter path' },
   { name: 'Acorn Electron', net: 'WiFi expansion', repo: 'rachel-electron', evidence: 'CI artifact', hardware: 'Real adapter path' },
@@ -26,23 +26,25 @@ const TEST_REPORT = `${ORG}/protocol/issues/new?template=hardware-validation.yml
 
 <Layout
   title="Ports - Rachel"
-  description="Rachel is being written for sixteen vintage machines in Z80, 6502, 6809 and 68000 assembly, all speaking the same 64-byte protocol as the iOS app."
+  description="Rachel for the VIC-20 and Commodore 64: offline solo play, screenshots and source. Explore the C64 development build with reconnect support."
 >
   <main class="ports">
     <div class="container">
-      <h1>One card game, every machine</h1>
+      <h1>Rachel on vintage computers</h1>
 
       <p class="lede">
-        Sixteen machines, in Z80, 6502, 6809 and 68000 assembly, all speaking
-        the same <a href="/protocol">64-byte protocol</a> as the iPhone app.
-        Every one of them is a public repository you can read today.
+        Rachel has a VIC-20 release and a playable C64 development build,
+        both with offline solo games. More vintage versions are in development. The shared
+        <a href="/protocol">network protocol</a> is designed for multiplayer
+        between different machines.
       </p>
 
       <p class="honest">
-        <strong>No vintage client is released or hardware-verified yet.</strong>
-        CI artifacts are test builds, not releases. “Emulator protocol” proves
-        message compatibility, not the screen, controls, adapter, or a physical
-        machine. The labels below say what evidence actually exists.
+        <strong>There is currently no public game server.</strong>
+        Vintage online play needs a separately run compatible server.
+        The VIC-20 v1.0.0 release is verified in PAL and NTSC emulation, with
+        physical hardware testing still pending. Other ports have different
+        levels of testing, shown below.
       </p>
 
       <div class="table-wrap">
@@ -74,27 +76,81 @@ const TEST_REPORT = `${ORG}/protocol/issues/new?template=hardware-validation.yml
         </table>
       </div>
 
-      <section>
-        <h2>How a 1982 machine keeps up</h2>
+      <section id="vic20">
+        <h2>A solo game on the VIC-20</h2>
         <p>
-          It doesn't run the game. The host does — it owns the deck, the rules
-          and the shuffle — and each client renders what it is told and sends
-          back what its player pressed. So a machine measured in kilobytes can
-          sit at the same table as an iPad: it needs enough memory to draw a
-          hand of cards, not enough to referee a game.
+          Load Rachel with an 8KB memory expansion and choose Solo. Pick a table
+          size from two to eight seats; computer opponents fill the other seats.
+          The game runs locally, so solo play needs neither a modem nor a server.
         </p>
         <p>
-          That is also what makes <em>same rules everywhere</em> true rather
-          than merely claimed. Sixteen separate implementations of stacking and
-          compulsory counters would each have to agree exactly, and the first
-          time they didn't, a game between two particular machines would come
-          apart. One engine and many renderers makes that impossible.
+          Version 1.0.0 has completed solo and online games in emulation.
+          It remains experimental on physical hardware until real-machine testing
+          is complete. The release includes the program, controls and testing notes.
         </p>
         <p>
-          The trade is honest and worth knowing: a vintage machine with no host
-          on the network has no game to play. Solo play is a capability of
-          platforms that also implement the rules locally, which today means
-          the iOS app.
+          <a href={`${ORG}/rachel-commodore-vic20/releases`}>VIC-20 releases</a>
+          &middot; <a href={`${ORG}/rachel-commodore-vic20`}>Source and setup instructions</a>
+        </p>
+        <h2>Playing over a network</h2>
+        <p>
+          In online mode, a server manages the cards and rules. Vintage clients
+          show the table and send each player's moves using the shared protocol.
+          The VIC-20's online mode has been tested against the Go server in emulation;
+          its physical modem connection still needs testing.
+        </p>
+        <p>
+          There is no hosted vintage multiplayer service to join at present.
+          The iOS app's offline solo and nearby multiplayer modes do not need one.
+        </p>
+      </section>
+
+      <section id="c64">
+        <h2>Pull up a chair at the C64</h2>
+        <p>
+          A blue screen, a handful of cards and up to seven computer opponents.
+          The C64 development build plays a complete solo game on the machine
+          itself. Choose Solo, pick a table size from two to eight seats, and
+          try to leave someone else holding the cards. No modem or server needed.
+        </p>
+        <figure class="vintage-shot">
+          <img src="/images/c64-solo.png" width="416" height="312" loading="lazy"
+            alt="Rachel running in C64 emulation: eight player counts above the discard pile, with the second card highlighted in the player's hand" />
+          <figcaption>Eight seats at the table. Captured from the production build in C64 emulation.</figcaption>
+        </figure>
+        <h3>Get back to the same game</h3>
+        <p>
+          Online play connects through an Ultimate interface or a user-port
+          WiFi modem. If the connection drops, Rachel tries to recover your
+          seat and hand. After three unsuccessful attempts, press R to retry
+          or Q to return to the menu.
+        </p>
+        <p>
+          The session is kept while the program stays loaded. Resetting the C64
+          starts fresh. Online play needs a separately run Rachel server;
+          there is currently no public one to join.
+        </p>
+        <figure class="vintage-shot">
+          <img src="/images/c64-result.png" width="416" height="312" loading="lazy"
+            alt="The C64 game-over screen says YOU WENT OUT after a network game that recovered from two forced connection drops" />
+          <figcaption>Back at the table: this emulator game finished after two forced disconnects.</figcaption>
+        </figure>
+        <h3>What has been tested</h3>
+        <p>
+          Sixteen automated solo games completed across all seven table sizes.
+          Both emulated network transports recovered from two forced drops,
+          restored the same seat and hand, and finished the game. Display and
+          keyboard checks pass too.
+        </p>
+        <p>
+          <strong>This is a development build, verified in emulation.</strong>
+          Physical C64, Ultimate and modem testing is still pending. The
+          2400-baud modem test uses 300 ms between server frames; the setup
+          instructions explain that setting.
+        </p>
+        <p>
+          <a href={`${ORG}/rachel-commodore-64`}>C64 source and build instructions</a>
+          &middot; <a href={`${ORG}/rachel-commodore-64/actions`}>Development builds</a>
         </p>
       </section>
 
@@ -130,7 +186,7 @@ const TEST_REPORT = `${ORG}/protocol/issues/new?template=hardware-validation.yml
         <p>
           Build pages linked above contain the current test artifacts where a
           repository uploads them. They expire with GitHub's artifact retention
-          window; durable downloads will arrive with actual releases.
+          window. For the VIC-20, use the release downloads linked above.
         </p>
         <p>
           If a machine you love is missing, it is missing because nobody has
@@ -255,7 +311,26 @@ const TEST_REPORT = `${ORG}/protocol/issues/new?template=hardware-validation.yml
     border-radius: 0.25rem;
   }
 
-  section { margin-bottom: 2.5rem; }
+  section { margin-bottom: 2.5rem; scroll-margin-top: 2rem; }
+
+  .vintage-shot { margin: 1.5rem 0 2rem; }
+
+  .vintage-shot img {
+    display: block;
+    width: 100%;
+    max-width: 624px;
+    height: auto;
+    image-rendering: pixelated;
+  }
+
+  .vintage-shot figcaption {
+    max-width: 624px;
+    margin-top: 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+  }
+
+  h3 { font-size: 1.125rem; margin: 1.5rem 0 0.75rem; }
 
   h2 {
     font-family: var(--font-display);

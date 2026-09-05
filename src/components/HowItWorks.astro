@@ -5,12 +5,12 @@ const RULES = [
   {
     rank: '8', suit: 'clubs' as const,
     title: 'Match cards',
-    body: "Play cards that match the top card by suit or rank. Can't play? Draw from the deck.",
+    body: "Play cards that match the top card by suit or rank. Can't play? Draw from the deck and your turn ends.",
   },
   {
     rank: 'J', suit: 'spades' as const,
-    title: 'Special cards',
-    body: '2s force draws, 7s skip players, Black Jacks attack, Red Jacks defend, Queens reverse, Aces change suit.',
+    title: 'Send the trouble on',
+    body: 'Facing a draw-two attack? Play another 2 and the next player faces four. Special cards can turn a comfortable lead into a handful of trouble.',
   },
   {
     rank: 'A', suit: 'hearts' as const,

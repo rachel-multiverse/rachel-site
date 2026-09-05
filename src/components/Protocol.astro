@@ -1,40 +1,21 @@
----
-// The section that turns "a ZX Spectrum can play against an iPhone" from an
-// assertion into a specification. Every figure here is a design constraint
-// lifted from PROTOCOL.md, not a rounded-off marketing number - which is why
-// the page can afford to link straight to the spec underneath it.
-const FACTS = [
-  { figure: '64', unit: 'bytes', body: 'Every message, fixed. No length prefixes, no variable-length parsing, nothing to allocate.' },
-  { figure: '<2', unit: 'KB', body: 'The protocol handling code an 8-bit machine needs. It has to fit alongside the game, not instead of it.' },
-  { figure: '3', unit: 'CPUs', body: 'Z80, 6502 and 68000 assembly, from the first draft. The format is what it is because they have to parse it.' },
-  { figure: '1', unit: 'spec', body: 'One document every client is checked against, with shared conformance vectors each one runs.' },
-];
----
-
 <section class="protocol">
   <div class="container">
-    <h2>The bit that makes it possible</h2>
+    <h2>Also on some rather older computers</h2>
     <p class="intro">
-      A 1982 machine cannot be handed a JSON payload and asked to cope. So the
-      wire format was designed for the oldest thing that has to speak it, and
-      everything modern speaks it too — the iPhone in the screenshots above is
-      talking the same protocol a Spectrum will.
+      Rachel also runs on the VIC-20 and Commodore 64. Both versions play
+      solo with up to seven computer opponents, without a modem or server.
+      The VIC-20 needs an 8KB memory expansion; the C64 uses its own RAM.
     </p>
-
-    <div class="facts">
-      {FACTS.map((f) => (
-        <article class="fact">
-          <p class="figure">{f.figure}<span class="unit">{f.unit}</span></p>
-          <p class="body">{f.body}</p>
-        </article>
-      ))}
-    </div>
-
     <p class="note">
-      It is called RUBP — the Rachel Unified Binary Protocol — and it is
-      published in full, because a specification nobody can read is not a
-      specification. <a href="/protocol">Read the spec</a>, or see
-      <a href="/ports">which machines are being written</a>.
+      The C64 development build can also reconnect to an interrupted online
+      game and recover its seat and hand. Solo play and network recovery have
+      been tested in emulation. Physical hardware testing is still pending,
+      and there is currently no public server for vintage multiplayer.
+    </p>
+    <p class="note">
+      <a href="/ports#c64">See Rachel on the C64</a>,
+      <a href="/ports#vic20">explore the VIC-20 release</a>, or
+      <a href="/protocol">read the shared network protocol</a>.
     </p>
   </div>
 </section>
