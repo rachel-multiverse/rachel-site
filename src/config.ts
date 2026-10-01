@@ -1,8 +1,6 @@
 /**
- * The App Store URL, or null while the app is still in review.
- *
- * This is the whole approval-day switch. When Apple approves Rachel, set this
- * to the real product URL and every call to action on the site goes live at
- * once. Do not scatter the URL through the markup.
+ * Shared App Store destination for every download button.
+ * This site update is prepared for 1.2; deploy once that version is released.
+ * Apple approval alone does not publish a version held for manual release.
  */
-export const APP_STORE_URL: string | null = null;
+export const APP_STORE_URL = 'https://apps.apple.com/app/id6794358319';

@@ -1,43 +1,56 @@
-# Astro Starter Kit: Minimal
+# Rachel website
+
+Astro site for Rachel, deployed to GitHub Pages at
+https://rachel.stevehill.xyz. The current local update is prepared for Rachel
+1.2: Saturday, Game Center invitations and Apple silicon Mac support.
+
+## Local preview
 
 ```sh
-npm create astro@latest -- --template minimal
+npm ci
+npm run dev -- --host 127.0.0.1
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Open http://127.0.0.1:4321. To check the static production build:
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+npm run build
+npm run preview -- --host 127.0.0.1
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Images
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+`./scripts/images.sh` converts existing native captures into small, versioned
+WebP files. ImageMagick is required. It does not recreate or alter the app's UI.
+The social card source is `scripts/og-card.html`, rendered in a browser at
+1200×630 and saved as `public/images/og-card.png`. Serve the repository root
+on a loopback-only HTTP server so its relative font and image paths resolve;
+capture the full page to preserve the exact canvas size. The current card was
+rendered and verified through Chrome.
 
-Any static assets, like images, can be placed in the `public/` directory.
+The default source is the completed 2026-10-01 validation directory in
+`../rachel-ios/fastlane/generated/release-validation/2026-10-01/`:
 
-## 🧞 Commands
+| Site image | Native source |
+| --- | --- |
+| Gameplay | `ipad-screenshots/02-table.png` |
+| Tutorial | `ipad-screenshots/04-tutorial.png` |
+| Nearby lobby | `network-screenshots/20-host-lobby.png` |
+| Wide gameplay | `ipad-screenshots/07-landscape-table.png` |
+| Saturday settings | `ipad-screenshots/08-settings.png` |
 
-All commands are run from the root of the project, from a terminal:
+Pass another validation directory as the first argument to regenerate from
+newer captures with the same filenames. Landscape orientation is baked before
+metadata is stripped. The app icon comes from the iOS asset catalogue.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Release
 
-## 👀 Want to learn more?
+This update describes 1.2. Wait until manual app release and confirm store
+availability before deploying it. App approval by itself does not release it.
+The App Store URL is shared through `src/config.ts`; every download button
+uses it.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Pushing `main` runs `.github/workflows/deploy.yml` and publishes the site.
+No push or deployment is required for local review.
+
+Announcement drafts and publication order: [docs/release-1.2.md](docs/release-1.2.md).

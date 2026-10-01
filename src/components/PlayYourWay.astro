@@ -1,102 +1,39 @@
----
-const MODES = [
-  { title: 'A table to yourself', body: 'Play offline against computer opponents. Choose from three difficulties, and leave a solo hand to finish later.' },
-  { title: 'Friends nearby', body: 'Bring 2-8 players together on the same local network. No account or internet needed.' },
-  { title: 'iPhone & iPad together', body: 'Play on either device, in portrait or landscape. Friends can join the same local game from an iPhone or iPad.' },
-];
----
-
-<section class="modes-section">
+<section id="play-your-way" class="modes-section">
   <div class="container">
-    <h2>Play your way</h2>
-    <div class="modes">
-      {MODES.map((m) => (
-        <article class="mode">
-          <h3>{m.title}</h3>
-          <p>{m.body}</p>
-        </article>
-      ))}
+    <div class="heading"><p class="eyebrow">There's a seat for you.</p><h2>Across the table.<br />Or across the miles.</h2><p>Bring your iPhone, iPad or Apple silicon Mac. Rachel makes room for friends — and fills the spare seats with characters.</p></div>
+    <div class="ways">
+      <article class="friends">
+        <div class="copy"><span class="suit" aria-hidden="true">♥</span><h3>Your friends.<br />Your kind of trouble.</h3><p>Invite a Game Center friend right from the host lobby, wherever they are. Or get 2–8 players together on the same local network, with no account or internet needed.</p><a href="/support#playing-with-friends">How to bring a friend <span aria-hidden="true">→</span></a></div>
+        <img src="/images/shot-lobby.webp" alt="A nearby Rachel lobby with Alex and Sam joined, and two spare seats for computer opponents" width="400" height="870" loading="lazy" />
+      </article>
+      <article class="solo"><span class="suit" aria-hidden="true">♣</span><h3>Just one more hand.</h3><p>A table to yourself, with fourteen character opponents and three difficulty levels. Play offline, leave a solo hand and come back to finish it later.</p><p class="aside">No sign-in needed for solo or nearby play.</p><div class="stack" aria-hidden="true"><span>A<br />♠</span><span>2<br />♥</span><span>7<br />♣</span></div></article>
     </div>
-
-    <figure class="lobby">
-      <img
-        src="/images/shot-lobby.webp"
-        alt="The host lobby: two human players who have joined, and two seats held by named emissaries that a joiner can still take"
-        width="400"
-        height="869"
-        loading="lazy"
-      />
-      <figcaption>
-        Computer opponents fill the spare seats. Two friends can have a full table.
-      </figcaption>
-    </figure>
   </div>
 </section>
-
 <style>
-  .modes-section {
-    background: var(--felt-deep);
-    padding: 5rem 0;
-  }
-
-  .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-
-  h2 {
-    font-family: var(--font-display);
-    font-size: clamp(1.9rem, 4.5vw, 2.75rem);
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
-
-  .modes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .mode {
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.045);
-    border-radius: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .mode h3 {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .mode p {
-    color: var(--text-muted);
-    font-size: 0.9375rem;
-  }
-
-  .lobby {
-    margin: 3rem auto 0;
-    max-width: 30rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .lobby img {
-    width: min(230px, 60%);
-    height: auto;
-    border-radius: 1.4rem;
-    box-shadow: 0 0 0 7px #1c1c1e, 0 0 0 9px #3a3a3c,
-      0 20px 40px rgba(0, 0, 0, 0.45);
-  }
-
-  .lobby figcaption {
-    color: var(--text-muted);
-    font-size: 0.9375rem;
-    text-align: center;
-    max-width: 26rem;
-  }
+  .modes-section { padding: 5.5rem 0; }
+  .container { max-width: 1160px; padding: 0 2rem; margin: auto; }
+  .heading { display: grid; grid-template-columns: 1.15fr 1fr; gap: .75rem 4rem; margin-bottom: 2.5rem; align-items: end; }
+  .eyebrow { grid-column: 1/-1; color: var(--green); font-weight: 650; }
+  h2 { font: 700 clamp(2.25rem, 4vw, 3.5rem)/1.15 var(--font-display); letter-spacing: -.035em; }
+  .heading > p:last-child { color: var(--text-muted); max-width: 30rem; }
+  .ways { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.5rem; }
+  article { border-radius: 1.5rem; overflow: hidden; }
+  .friends { background: var(--mint); display: grid; grid-template-columns: 1fr 180px; gap: 1.5rem; padding: 2.5rem 2rem 0 2.5rem; align-items: start; }
+  h3 { font: 700 1.9rem/1.2 var(--font-display); margin: .8rem 0 1rem; letter-spacing: -.025em; }
+  .copy { padding-bottom: 2.5rem; }
+  .copy p { margin-bottom: 1.5rem; }
+  .copy a { font-size: .9rem; font-weight: 650; }
+  .friends img { width: 100%; height: auto; border: 4px solid var(--ink); border-radius: 1rem 1rem 0 0; transform: rotate(3deg) translateY(1rem); box-shadow: 5px 6px 0 #263f6024; }
+  .suit { font-size: 2rem; line-height: 1; }
+  .friends .suit { color: var(--pip-red); }
+  .solo { padding: 2.5rem; background: #f0e8ce; }
+  .solo p { color: var(--text-muted); }
+  .aside { font-size: .85rem; margin-top: 1.25rem; }
+  .stack { display: flex; justify-content: center; margin-top: 2rem; height: 110px; }
+  .stack span { display: block; width: 68px; height: 95px; background: var(--card-stock); border: 2px solid var(--ink); border-radius: .55rem; padding: .5rem; font: 700 1.5rem/1 var(--font-display); box-shadow: 3px 4px 0 var(--ink); transform: rotate(-14deg); }
+  .stack span:nth-child(2) { color: var(--pip-red); transform: translateY(-8px); margin-left: -12px; }
+  .stack span:last-child { transform: rotate(14deg); margin-left: -12px; }
+  @media (max-width: 960px) { .ways { grid-template-columns: 1fr; } .solo { display: block; } .friends { grid-template-columns: 1fr 200px; } }
+  @media (max-width: 600px) { .container { padding: 0 1.5rem; } .heading { grid-template-columns: 1fr; gap: 1rem; } .friends { grid-template-columns: 1fr 110px; gap: 1rem; padding: 1.5rem 1rem 0 1.5rem; } h3 { font-size: 1.55rem; } .copy p { font-size: .9rem; } .friends img { margin-top: 3rem; } .solo { padding: 1.75rem; } }
 </style>

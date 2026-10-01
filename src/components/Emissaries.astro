@@ -43,9 +43,9 @@ const CAST = [
 
     <img
       src="/images/emissary-table.webp"
-      alt="Sid, Speccy and The Scribe seated around the Rachel table on iPad. Sid and Speccy carry their machine's badge; The Scribe, who is not from a machine, carries none."
+      alt="Sid, Speccy and The Scribe around the bright Saturday table on iPad, with their drawn character portraits."
       width="1400"
-      height="1050"
+      height="973"
       loading="lazy"
       class="shot"
     />
@@ -105,8 +105,9 @@ const CAST = [
     width: 100%;
     height: auto;
     border-radius: 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--line);
+    box-shadow: 6px 8px 0 #263f6024;
+    border: 5px solid var(--ink);
     margin-bottom: 3rem;
   }
 
@@ -122,9 +123,9 @@ const CAST = [
      seat uses in game. */
   .emissary {
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.045);
+    background: var(--card-stock);
     border-radius: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--line);
     border-left: 3px solid var(--accent);
   }
 
@@ -138,7 +139,7 @@ const CAST = [
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 0.72rem;
     letter-spacing: 0.04em;
-    color: var(--accent);
+    color: var(--text-muted);
     margin-bottom: 0.6rem;
   }
 
@@ -171,7 +172,7 @@ const CAST = [
      last item being the way into the rest. */
   .platforms .more {
     padding: 0.35rem 0.8rem;
-    border: 1px solid rgba(255, 255, 255, 0.22);
+    border: 1px solid var(--line);
     border-radius: 1rem;
     font-size: 0.8125rem;
     text-decoration: none;
@@ -180,13 +181,13 @@ const CAST = [
   }
 
   .platforms .more:hover {
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: var(--ink);
     color: var(--text);
   }
 
   .platforms span {
     padding: 0.35rem 0.8rem;
-    background: rgba(255, 255, 255, 0.08);
+    background: #263f600b;
     border-radius: 1rem;
     font-size: 0.8125rem;
     color: var(--text-muted);

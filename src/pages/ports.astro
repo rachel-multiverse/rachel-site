@@ -28,7 +28,7 @@ const TEST_REPORT = `${ORG}/protocol/issues/new?template=hardware-validation.yml
   title="Ports - Rachel"
   description="Rachel for the VIC-20 and Commodore 64: offline solo play, screenshots and source. Explore the C64 development build with reconnect support."
 >
-  <main class="ports">
+  <main id="main-content" class="ports">
     <div class="container">
       <h1>Rachel on vintage computers</h1>
 
@@ -225,8 +225,8 @@ const TEST_REPORT = `${ORG}/protocol/issues/new?template=hardware-validation.yml
 
   .honest {
     padding: 1rem 1.25rem;
-    background: rgba(255, 255, 255, 0.045);
-    border-left: 3px solid rgba(255, 255, 255, 0.25);
+    background: var(--card-stock);
+    border-left: 3px solid var(--line);
     border-radius: 0.4rem;
     color: var(--text-muted);
     margin-bottom: 2.5rem;
@@ -262,7 +262,7 @@ const TEST_REPORT = `${ORG}/protocol/issues/new?template=hardware-validation.yml
   th, td {
     text-align: left;
     padding: 0.6rem 0.75rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--line);
     white-space: nowrap;
   }
 
@@ -276,13 +276,13 @@ const TEST_REPORT = `${ORG}/protocol/issues/new?template=hardware-validation.yml
   .badge {
     display: inline-block;
     padding: 0.18rem 0.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border: 1px solid var(--line);
     border-radius: 999px;
     font-size: 0.75rem;
     line-height: 1.35;
   }
 
-  .evidence { color: var(--text); background: rgba(255, 255, 255, 0.06); }
+  .evidence { color: var(--text); background: var(--card-stock); }
   .hardware { color: var(--text-muted); }
 
   .links {
@@ -299,7 +299,7 @@ const TEST_REPORT = `${ORG}/protocol/issues/new?template=hardware-validation.yml
 
   .tester-cta {
     padding: 1rem 1.25rem;
-    border: 1px solid rgba(255, 255, 255, 0.13);
+    border: 1px solid var(--line);
     border-radius: 0.4rem;
   }
 
@@ -343,6 +343,6 @@ const TEST_REPORT = `${ORG}/protocol/issues/new?template=hardware-validation.yml
   .back-link {
     margin-top: 3rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--line);
   }
 </style>

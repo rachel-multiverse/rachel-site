@@ -12,9 +12,9 @@ import { APP_STORE_URL } from '../config';
 // would put the whole thing back. Anyone who needs them can ask, and they are
 // reproducible from the capture script in minutes.
 const SHOTS = [
-  { src: '/images/shot-table.webp', alt: 'A game in progress on iPhone, with an opponent down to their last card', caption: 'The table' },
-  { src: '/images/shot-lobby.webp', alt: 'The host lobby, with two players joined and two seats held by emissaries', caption: 'Hosting a game' },
-  { src: '/images/shot-tutorial.webp', alt: 'The tutorial explaining a special card with a real hand dealt', caption: 'The tutorial' },
+  { src: '/images/shot-table.webp', alt: 'A game in progress on iPhone, with an opponent down to their last card', caption: 'The Saturday table', width: 480, height: 691 },
+  { src: '/images/shot-lobby.webp', alt: 'The host lobby, with two players joined and two seats held by emissaries', caption: 'Hosting a nearby game', width: 400, height: 870 },
+  { src: '/images/shot-tutorial.webp', alt: 'The tutorial explaining a special card with a real hand dealt', caption: 'Learn as you play', width: 480, height: 691 },
 ];
 ---
 
@@ -22,7 +22,7 @@ const SHOTS = [
   title="Press - Rachel"
   description="Press information for Rachel: boilerplate copy, screenshots, the app icon, and who to contact."
 >
-  <main class="press">
+  <main id="main-content" class="press">
     <div class="container">
       <h1>Press</h1>
       <p class="lede">
@@ -36,7 +36,7 @@ const SHOTS = [
         <dl>
           <div><dt>Name</dt><dd>Rachel: Tactical Card Game</dd></div>
           <div><dt>Developer</dt><dd>Steve Hill</dd></div>
-          <div><dt>Platforms</dt><dd>iPhone and iPad, one universal app</dd></div>
+          <div><dt>Platforms</dt><dd>iPhone, iPad and Apple silicon Mac, one purchase</dd></div>
           <div><dt>Price</dt><dd>£2.99, paid once. No advertising, no tracking, no subscription, no in-app purchases</dd></div>
           <div>
             <dt>Availability</dt>
@@ -51,17 +51,17 @@ const SHOTS = [
 
         <h3>One line</h3>
         <blockquote>
-          Rachel is a card game for iPhone and iPad where you try to get rid of
+          Rachel is a card game for iPhone, iPad and Apple silicon Mac where you try to get rid of
           your cards while your opponents give you more.
         </blockquote>
 
         <h3>One paragraph</h3>
         <blockquote>
           One card left? A Black Jack could change that. Rachel is a card game
-          for iPhone and iPad where attacks stack, play reverses and the last
+          for iPhone, iPad and Apple silicon Mac where attacks stack, play reverses and the last
           player holding cards loses. Play solo offline against fourteen
-          characters with their own table talk, or with 2-8 people on the same
-          local network. A guided tutorial teaches the special cards as you
+          characters with their own table talk. Invite a Game Center friend over
+          the internet, or bring 2–8 people together on the same local network. A guided tutorial teaches the special cards as you
           play. Buy once for the whole game, with no ads or in-app purchases.
         </blockquote>
 
@@ -75,11 +75,18 @@ const SHOTS = [
             reduces that penalty. The last player still holding cards loses.
           </p>
           <p>
-            The iPhone and iPad app includes offline solo play at three
+            The iPhone, iPad and Apple silicon Mac app includes offline solo play at three
             difficulty levels, fourteen computer characters with table talk,
-            and local multiplayer for 2-8 people. A guided tutorial introduces
+            Game Center invitations and local multiplayer for 2–8 people. A guided tutorial introduces
             the special cards. VoiceOver, adjustable text sizes and optional
             four-colour suits help players follow the action.
+          </p>
+          <p>
+            Saturday gives the table a Saturday-morning cartoon look: painted
+            felt, drawn cards and light and dark appearances. Choose from five
+            table themes to make yourself comfortable. Game Center friends are
+            selected right in the host lobby; disconnected guests can return to
+            their reserved seat and hand while the host keeps the game open.
           </p>
           <p>
             Steve Hill is also bringing Rachel to vintage computers. The VIC-20
@@ -110,7 +117,7 @@ const SHOTS = [
         <div class="shots">
           {SHOTS.map((s) => (
             <figure>
-              <img src={s.src} alt={s.alt} width="400" height="869" loading="lazy" />
+              <img src={s.src} alt={s.alt} width={s.width} height={s.height} loading="lazy" />
               <figcaption>{s.caption}</figcaption>
             </figure>
           ))}
@@ -158,7 +165,7 @@ const SHOTS = [
     font-size: 1.5rem;
     margin-bottom: 1rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--line);
   }
 
   h3 {
@@ -182,8 +189,8 @@ const SHOTS = [
 
   /* Quoted so it reads as liftable text rather than as the page talking. */
   blockquote {
-    background: rgba(255, 255, 255, 0.045);
-    border-left: 3px solid rgba(255, 255, 255, 0.22);
+    background: var(--card-stock);
+    border-left: 3px solid var(--line);
     border-radius: 0.4rem;
     padding: 1rem 1.25rem;
     color: var(--text-muted);
@@ -210,7 +217,7 @@ const SHOTS = [
     width: 100%;
     height: auto;
     border-radius: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--line);
   }
 
   figcaption {
@@ -225,7 +232,7 @@ const SHOTS = [
   .back-link {
     margin-top: 3rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--line);
   }
 
   @media (max-width: 520px) {

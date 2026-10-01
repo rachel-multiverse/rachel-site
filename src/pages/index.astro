@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Saturday from '../components/Saturday.astro';
 import Hero from '../components/Hero.astro';
 import Emissaries from '../components/Emissaries.astro';
 import Protocol from '../components/Protocol.astro';
@@ -12,11 +13,12 @@ import ClosingCTA from '../components/ClosingCTA.astro';
 
 <Layout
   title="Rachel: Tactical Card Game"
-  description="One card left. Trouble ahead. Race to empty your hand in Rachel for iPhone and iPad. Play solo offline or with friends nearby. Buy once, with no ads."
+  description="One card left. Trouble ahead. Pull up a chair in Rachel for iPhone, iPad and Apple silicon Mac. Play solo offline, nearby or with Game Center friends. Buy once, with no ads."
 >
-  <main>
+  <main id="main-content">
     <Hero />
     <HowItWorks />
+    <Saturday />
     <LearnByPlaying />
     <PlayYourWay />
     <Emissaries />
@@ -44,7 +46,7 @@ import ClosingCTA from '../components/ClosingCTA.astro';
   footer {
     padding: 3rem 0;
     background: var(--felt-deep);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--line);
     text-align: center;
   }
 
@@ -57,7 +59,8 @@ import ClosingCTA from '../components/ClosingCTA.astro';
   nav {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 1rem 2rem;
+    flex-wrap: wrap;
     margin-bottom: 1rem;
   }
 

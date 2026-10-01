@@ -10,7 +10,7 @@ const { title, description, sourceRevision, sourceDate } = frontmatter;
 ---
 
 <Layout title={title} description={description}>
-  <main class="doc">
+  <main id="main-content" class="doc">
     <div class="container">
       <slot />
 
@@ -53,7 +53,7 @@ const { title, description, sourceRevision, sourceDate } = frontmatter;
     font-size: 1.5rem;
     margin: 3rem 0 1rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--line);
   }
 
   .doc :global(h3) {
@@ -86,7 +86,7 @@ const { title, description, sourceRevision, sourceDate } = frontmatter;
   .doc :global(code) {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 0.875em;
-    background: rgba(0, 0, 0, 0.3);
+    background: #263f600b;
     padding: 0.1em 0.4em;
     border-radius: 0.25rem;
     color: var(--text);
@@ -96,8 +96,8 @@ const { title, description, sourceRevision, sourceDate } = frontmatter;
      part a port author actually reads. They must not wrap, and they must not
      make the page scroll sideways - so each block scrolls in its own right. */
   .doc :global(pre) {
-    background: rgba(0, 0, 0, 0.32);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #263f600b;
+    border: 1px solid var(--line);
     border-radius: 0.5rem;
     padding: 1rem;
     margin-bottom: 1.5rem;
@@ -110,6 +110,7 @@ const { title, description, sourceRevision, sourceDate } = frontmatter;
     background: none;
     padding: 0;
     white-space: pre;
+    color: inherit;
   }
 
   .doc :global(table) {
@@ -123,7 +124,7 @@ const { title, description, sourceRevision, sourceDate } = frontmatter;
   .doc :global(td) {
     text-align: left;
     padding: 0.5rem 0.75rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--line);
     color: var(--text-muted);
   }
 
@@ -134,12 +135,12 @@ const { title, description, sourceRevision, sourceDate } = frontmatter;
 
   .doc :global(hr) {
     border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--line);
     margin: 2.5rem 0;
   }
 
   .doc :global(blockquote) {
-    border-left: 3px solid rgba(255, 255, 255, 0.2);
+    border-left: 3px solid var(--line);
     padding-left: 1rem;
     margin-bottom: 1rem;
   }
@@ -148,7 +149,7 @@ const { title, description, sourceRevision, sourceDate } = frontmatter;
   .back-link {
     margin-top: 3rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--line);
     color: var(--text-muted);
     font-size: 0.9375rem;
   }

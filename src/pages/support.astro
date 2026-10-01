@@ -3,15 +3,15 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Support - Rachel" description="Help and support for the Rachel card game app">
-  <main class="legal">
+  <main id="main-content" class="legal">
     <div class="container">
-      <h1>Support</h1>
-      <p class="last-updated">Last updated: July 2026</p>
+      <h1>Need a hand?</h1>
+      <p class="last-updated">Last updated: October 2026</p>
 
       <section>
         <h2>Get in touch</h2>
         <p>Email <a href="mailto:rachel@stevehill.xyz">rachel@stevehill.xyz</a> and you'll hear back from a real person, usually within a couple of days.</p>
-        <p>Bug reports are genuinely welcome. It helps enormously if you can include your device model, your iOS version, and what you were doing when it went wrong. You'll find the app version at the bottom of the Settings screen.</p>
+        <p>Bug reports are welcome. Please include your device model, your iOS, iPadOS or macOS version, and what you were doing when it went wrong. You'll find the app version at the bottom of the Settings screen.</p>
       </section>
 
       <section>
@@ -25,17 +25,33 @@ import Layout from '../layouts/Layout.astro';
 
         <h3>The other device can't find my game</h3>
         <p>Local multiplayer discovers nearby players over your local network, so both devices need to be on the same Wi-Fi network, and Rachel needs permission to use it.</p>
-        <p>If you declined the local network prompt when you first hosted or joined a game, iOS won't ask again. Turn it back on in the iOS <strong>Settings</strong> app under <strong>Rachel &rsaquo; Local Network</strong>.</p>
+        <p>If you declined the local network prompt when you first hosted or joined a game, allow Rachel to use the local network in your device's privacy settings. On iPhone and iPad, look under <strong>Settings → Apps → Rachel → Local Network</strong>.</p>
 
         <h3>Why can't I play a card that looks legal?</h3>
         <p>Two rules catch people out. If someone has played an attack card against you and you hold a card that can counter it, you must play that counter. And once you draw, your turn ends immediately — you can't draw and then play.</p>
         <p>When a card can't be played, the app explains why rather than just refusing the tap.</p>
 
-        <h3>Can I play against people who aren't nearby?</h3>
-        <p>Not in this version. Rachel currently supports solo play against the multiverse emissaries and local multiplayer with people on the same network. Internet multiplayer is in development.</p>
+        <h3 id="playing-with-friends">How do I invite a friend who isn't nearby?</h3>
+        <p>Game Center brings your friends to the table over the internet. On the main menu, choose <strong>Host Game → Invite a Friend</strong>. Pick your table size, choose friends from the list below the seats and send the invitation. Wait for your friends to join their seats before starting the game.</p>
+        <p>To receive an invitation, choose <strong>Join Game → Join a Friend</strong>, sign in if asked and leave Rachel ready to join. Accept the Game Center invitation when it arrives. This also enables invitation reception on the Mac without a sign-in prompt at launch.</p>
+
+        <h3>Why isn't my friend in the list?</h3>
+        <p>You need to be Game Center friends, and both players need to let Rachel access their Game Center friends list. Add each other in Apple's Games app, then allow friend-list access when Rachel asks. If you previously declined, check your Game Center settings.</p>
+        <p>If everyone available is already seated, the lobby says <strong>No other Game Center friends</strong>. They haven't disappeared — they're already at your table.</p>
+
+        <h3>I can't send or receive an invitation</h3>
+        <p>Both players need an internet connection and must be signed in to Game Center. Check that Screen Time allows multiplayer games. On Mac, open <strong>Join a Friend</strong> before your friend sends the invitation. If joining fails, return to the menu and ask the host for a fresh invitation.</p>
+        <p>Solo and nearby play don't need Game Center. You can keep playing those if you prefer to stay signed out.</p>
+
+        <h3>What happens if someone disconnects?</h3>
+        <p>For a Game Center guest, the host keeps their seat and hand while the game remains open. Reopen Rachel and choose <strong>Join Game → Join a Friend</strong> to be ready to return. The host may need to invite you again. When you rejoin, you return to your original seat and hand.</p>
+        <p>If the host leaves, guests see <strong>Host Disconnected</strong> and can return to the menu. The game doesn't transfer to another host. Keep the host's game open while a guest reconnects.</p>
+
+        <h3>Which Macs can play?</h3>
+        <p>Rachel runs on Apple silicon Macs as well as iPhone and iPad. Friends on any of these devices can play together. The whole game is included in one purchase, with no subscription or in-app purchases.</p>
 
         <h3>My game vanished when I closed the app</h3>
-        <p>It shouldn't have. Solo games save automatically, and <strong>Continue Game</strong> on the main menu picks up where you left off. If a game genuinely disappeared, please email us — that's a bug worth chasing.</p>
+        <p>It shouldn't have. Solo games save automatically, and <strong>Continue Game</strong> on the main menu picks up where you left off. If a game disappeared, please email us — that's a bug worth chasing.</p>
 
         <h3>How do I reset my statistics?</h3>
         <p>Settings has a game data section where you can clear your saved statistics and achievements. This can't be undone.</p>
@@ -111,6 +127,6 @@ import Layout from '../layouts/Layout.astro';
   .back-link {
     margin-top: 3rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    border-top: 1px solid var(--line);
   }
 </style>

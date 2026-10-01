@@ -1,0 +1,14 @@
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Rachel home"><span class="brand-card" aria-hidden="true">R<small>♥</small></span>Rachel</a>
+  <nav aria-label="Main navigation"><a href="/#play-your-way">Ways to play</a><a href="/support">Need a hand?</a></nav>
+</header>
+<style>
+  .site-header { max-width: 1200px; margin: auto; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; }
+  .brand { display: inline-flex; align-items: center; gap: .8rem; font: 700 1.7rem var(--font-display); text-decoration: none; }
+  .brand-card { display: grid; place-items: center; width: 2.4rem; height: 3rem; background: var(--card-stock); color: var(--pip-red); border: 2px solid var(--ink); border-radius: .35rem; transform: rotate(-9deg); box-shadow: 2px 3px 0 var(--ink); position: relative; }
+  .brand-card small { font: .5rem var(--font-sans); position: absolute; right: .25rem; bottom: .2rem; }
+  nav { display: flex; gap: 2rem; font-size: .9rem; font-weight: 600; }
+  nav a { text-decoration: none; }
+  nav a:hover { text-decoration: underline; }
+  @media (max-width: 520px) { .site-header { padding: 1.25rem 1.5rem; gap: 1rem; } .brand { font-size: 1.4rem; } nav { gap: 1rem; font-size: .8rem; } nav a:first-child { display: none; } }
+</style>

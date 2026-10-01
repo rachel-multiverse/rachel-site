@@ -1,12 +1,13 @@
 ---
 import '../styles/tokens.css';
+import SiteHeader from '../components/SiteHeader.astro';
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = "A tactical card game for iPhone and iPad" } = Astro.props;
+const { title, description = "A tactical card game for iPhone, iPad and Apple silicon Mac" } = Astro.props;
 
 // Absolute, because Open Graph consumers do not resolve relative URLs - a
 // root-relative /images/og-card.png is fetched against their own host and
@@ -48,16 +49,18 @@ const ogImage = new URL('/images/og-card.png', Astro.site);
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Rachel - shed your hand, survive the attacks, the last player standing loses" />
+    <meta property="og:image:alt" content="Rachel — your next card night on iPhone, iPad and Apple silicon Mac" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <meta name="theme-color" content="#114526" />
+    <meta name="theme-color" content="#f8f4e9" />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <SiteHeader />
     <slot />
   </body>
 </html>
@@ -89,4 +92,13 @@ const ogImage = new URL('/images/og-card.png', Astro.site);
   a:hover {
     text-decoration: none;
   }
+</style>
+
+<style is:global>
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  :focus-visible { outline: 3px solid var(--pip-red); outline-offset: 5px; }
+  .skip-link { position: absolute; top: -5rem; left: 1rem; z-index: 10; background: var(--card-stock); padding: .75rem 1rem; }
+  .skip-link:focus { top: 1rem; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 </style>

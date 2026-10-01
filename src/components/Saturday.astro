@@ -1,0 +1,18 @@
+<section class="saturday">
+  <div class="container">
+    <div class="copy"><p class="eyebrow">Meet Saturday.</p><h2>A brighter table.<br />Same delicious trouble.</h2><p>Painted felt. Drawn cards. A Saturday-morning cartoon look that makes you want to deal another hand.</p><p class="detail">Saturday has light and dark appearances. Five table themes, optional four-colour suits and your own player portrait let you make yourself comfortable.</p></div>
+    <figure><img src="/images/shot-settings.webp" width="480" height="691" loading="lazy" alt="Rachel's settings, with Saturday selected alongside Classic, Lounge, Casino and High Contrast" /><figcaption>Make yourself at home.</figcaption></figure>
+  </div>
+</section>
+<style>
+  .saturday { background: var(--mint); padding: 5rem 0; border-block: 1px solid #263f6020; }
+  .container { max-width: 1000px; padding: 0 2rem; margin: auto; display: grid; grid-template-columns: 1.3fr 1fr; gap: 5rem; align-items: center; }
+  .eyebrow { font-weight: 650; color: var(--green); margin-bottom: 1rem; }
+  h2 { font: 700 clamp(2.2rem, 3.7vw, 3.3rem)/1.15 var(--font-display); letter-spacing: -.035em; margin-bottom: 1.5rem; }
+  .copy > p:not(.eyebrow) { font-size: 1.1rem; max-width: 30rem; }
+  .detail { margin-top: 1.25rem; font-size: .95rem !important; }
+  figure { max-width: 300px; margin: auto; transform: rotate(3deg); }
+  img { display: block; width: 100%; height: auto; border: 5px solid var(--ink); border-radius: 1.15rem; box-shadow: 6px 7px 0 #263f6030; }
+  figcaption { font: 700 1rem var(--font-display); text-align: center; margin-top: 1.25rem; }
+  @media (max-width: 650px) { .container { grid-template-columns: 1fr; gap: 2.5rem; padding: 0 1.5rem; } figure { max-width: 250px; } }
+</style>

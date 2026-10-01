@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  The source of the social preview card, rendered to a PNG by images.sh.
+  The source of the social preview card, rendered to a 1200×630 PNG in a browser.
 
   A card rather than a raw screenshot: a link posted to Slack or iMessage is
   seen at about 500px wide, where a phone screenshot is a green sliver with
@@ -28,14 +28,14 @@
   /* Kept in step with src/styles/tokens.css by hand, because a file:// render
      cannot import the site's stylesheet through Astro's build. Six values. */
   :root {
-    --felt: #1d6038;
-    --felt-light: #2e7d4f;
-    --felt-deep: #114526;
-    --text: #f4f2ec;
-    --text-muted: rgba(255, 255, 255, 0.72);
+    --felt: #f8f4e9;
+    --felt-light: #fffaf0;
+    --felt-deep: #bce5d3;
+    --text: #263f60;
+    --text-muted: #536174;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
 
   body {
     width: 1200px;
@@ -60,7 +60,7 @@
     line-height: 0.92;
     letter-spacing: -0.01em;
     margin-bottom: 28px;
-    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.38);
+
   }
 
   /* No max-width: the line breaks are in the markup, and a width limit only
@@ -83,15 +83,16 @@
   img {
     width: 268px;
     height: auto;
-    border-radius: 30px;
-    box-shadow: 0 0 0 9px #1c1c1e, 0 0 0 11px #3a3a3c,
-      0 30px 60px rgba(0, 0, 0, 0.5);
+    border-radius: 22px;
+    border: 5px solid var(--text);
+    transform: rotate(5deg);
+    box-shadow: 8px 10px 0 #263f6024;
   }
 </style>
 
 <div class="copy">
   <h1>Rachel</h1>
-  <p class="promise">Shed your hand. Survive the attacks.<br />The last player standing loses.</p>
-  <p class="meta">iPhone &amp; iPad &middot; No ads, no tracking</p>
+  <p class="promise">Your next card night.<br />A little friendly trouble.</p>
+  <p class="meta">iPhone, iPad &amp; Apple silicon Mac</p>
 </div>
 <img src="../public/images/shot-table.webp" alt="" />
