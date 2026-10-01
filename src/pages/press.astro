@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { APP_STORE_URL } from '../config';
+import { RELEASE_1_2_AVAILABLE } from '../config';
 
 // Boilerplate a writer can lift verbatim, so a description of Rachel that
 // appears somewhere else is one we wrote rather than one reconstructed from
@@ -36,11 +36,11 @@ const SHOTS = [
         <dl>
           <div><dt>Name</dt><dd>Rachel: Tactical Card Game</dd></div>
           <div><dt>Developer</dt><dd>Steve Hill</dd></div>
-          <div><dt>Platforms</dt><dd>iPhone, iPad and Apple silicon Mac, one purchase</dd></div>
+          <div><dt>Platforms</dt><dd>iPhone and iPad; Apple silicon Mac joins in 1.2. One purchase.</dd></div>
           <div><dt>Price</dt><dd>£2.99, paid once. No advertising, no tracking, no subscription, no in-app purchases</dd></div>
           <div>
             <dt>Availability</dt>
-            <dd>{APP_STORE_URL ? 'On the App Store' : 'Not yet released — awaiting App Store review'}</dd>
+            <dd>{RELEASE_1_2_AVAILABLE ? 'Rachel 1.2 is on the App Store' : 'Rachel 1.1 is available for iPhone and iPad. Rachel 1.2, described below, is awaiting App Store review.'}</dd>
           </div>
           <div><dt>Contact</dt><dd><a href="mailto:rachel@stevehill.xyz">rachel@stevehill.xyz</a></dd></div>
         </dl>

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { RELEASE_1_2_AVAILABLE } from '../config';
 ---
 
 <Layout title="Support - Rachel" description="Help and support for the Rachel card game app">
@@ -7,6 +8,7 @@ import Layout from '../layouts/Layout.astro';
     <div class="container">
       <h1>Need a hand?</h1>
       <p class="last-updated">Last updated: October 2026</p>
+      {!RELEASE_1_2_AVAILABLE && <p class="version-note">Game Center invitations and Mac play arrive with Rachel 1.2, which is currently awaiting App Store review. The help below describes that update; solo and nearby play are available in the current iPhone and iPad app.</p>}
 
       <section>
         <h2>Get in touch</h2>
@@ -76,6 +78,7 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <style>
+  .version-note { background: var(--mint); padding: 1rem 1.25rem; border-radius: .75rem; margin-bottom: 2.5rem; }
   .legal {
     background: var(--felt-deep);
     padding: 4rem 0;

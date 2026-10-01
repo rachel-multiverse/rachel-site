@@ -1,8 +1,16 @@
+---
+import { RELEASE_1_2_AVAILABLE } from '../config';
+---
+{!RELEASE_1_2_AVAILABLE && <div class="release-note"><strong>Coming in Rachel 1.2.</strong> Saturday, Game Center friends and Mac play. <span>Awaiting App Store review.</span></div>}
 <header class="site-header">
   <a class="brand" href="/" aria-label="Rachel home"><span class="brand-card" aria-hidden="true">R<small>♥</small></span>Rachel</a>
   <nav aria-label="Main navigation"><a href="/#play-your-way">Ways to play</a><a href="/support">Need a hand?</a></nav>
 </header>
 <style>
+  .release-note { background: var(--mint); border-bottom: 1px solid var(--line); color: var(--ink); padding: .6rem 1.5rem; text-align: center; font-size: .8rem; text-wrap: balance; }
+  .release-note strong { margin-right: .3rem; }
+  .release-note span { white-space: nowrap; }
+
   .site-header { max-width: 1200px; margin: auto; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; }
   .brand { display: inline-flex; align-items: center; gap: .8rem; font: 700 1.7rem var(--font-display); text-decoration: none; }
   .brand-card { display: grid; place-items: center; width: 2.4rem; height: 3rem; background: var(--card-stock); color: var(--pip-red); border: 2px solid var(--ink); border-radius: .35rem; transform: rotate(-9deg); box-shadow: 2px 3px 0 var(--ink); position: relative; }

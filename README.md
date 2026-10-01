@@ -45,8 +45,11 @@ metadata is stripped. The app icon comes from the iOS asset catalogue.
 
 ## Release
 
-This update describes 1.2. Wait until manual app release and confirm store
-availability before deploying it. App approval by itself does not release it.
+The site can publish ahead of the app update: a notice marks the 1.2 features
+as forthcoming, while download links point to the existing app. After manual
+app release and confirmed store availability, set `RELEASE_1_2_AVAILABLE` to
+`true` in `src/config.ts`, remove the forthcoming line from the social card
+and render it again. App approval by itself does not release it.
 The App Store URL is shared through `src/config.ts`; every download button
 uses it.
 

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { RELEASE_1_2_AVAILABLE } from '../config';
 import Saturday from '../components/Saturday.astro';
 import Hero from '../components/Hero.astro';
 import Emissaries from '../components/Emissaries.astro';
@@ -13,7 +14,7 @@ import ClosingCTA from '../components/ClosingCTA.astro';
 
 <Layout
   title="Rachel: Tactical Card Game"
-  description="One card left. Trouble ahead. Pull up a chair in Rachel for iPhone, iPad and Apple silicon Mac. Play solo offline, nearby or with Game Center friends. Buy once, with no ads."
+  description={RELEASE_1_2_AVAILABLE ? "Pull up a chair in Rachel for iPhone, iPad and Apple silicon Mac. Play solo offline, nearby or with Game Center friends." : "Pull up a chair in Rachel. Coming in 1.2: Saturday, Game Center invitations and Apple silicon Mac support. Play the current app on iPhone and iPad."}
 >
   <main id="main-content">
     <Hero />

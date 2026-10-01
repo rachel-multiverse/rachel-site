@@ -1,6 +1,4 @@
-/**
- * Shared App Store destination for every download button.
- * This site update is prepared for 1.2; deploy once that version is released.
- * Apple approval alone does not publish a version held for manual release.
- */
+/** Shared store destination and the launch-day switch for the 1.2 notice. */
 export const APP_STORE_URL = 'https://apps.apple.com/app/id6794358319';
+// Set true only after manual release and confirmed App Store availability.
+export const RELEASE_1_2_AVAILABLE = false;

@@ -40,6 +40,8 @@ Pull up a chair: https://rachel.stevehill.xyz
 
 1. Confirm App Store review approval, then release 1.2 manually when ready.
 2. Confirm 1.2 is available on the product page and the Mac download is available.
-3. Publish this website update. Pushing `main` triggers GitHub Pages deployment.
+3. Switch `RELEASE_1_2_AVAILABLE` to `true` and update the social card to
+   remove its forthcoming label. The website redesign can publish earlier
+   with the 1.2 notice. Pushing `main` triggers GitHub Pages deployment.
 4. Check the live homepage, download links, support page and social preview.
 5. Post the chosen announcement. These drafts have not been sent anywhere.
