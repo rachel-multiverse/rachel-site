@@ -4,7 +4,7 @@
 layout: ../layouts/DocLayout.astro
 title: RUBP Protocol - Rachel
 description: The Rachel Unified Binary Protocol - fixed 64-byte messages, big-endian, parseable in Z80, 6502 and 68000 assembly.
-sourceRevision: "bf7a2d81086c6ecd168f4057c45d428f4815db61"
+sourceRevision: "24401fe1fa8c9e0d4fb97f79fb6dea39a348c3b5"
 sourceDate: "2026-10-08"
 ---
 
@@ -56,7 +56,7 @@ A platform **may** additionally implement the game locally in order to offer
 solo play. The iOS and Android apps and the C64 and VIC-20 clients have local
 solo engines. This is a platform capability, not a protocol requirement;
 network-only clients still need a compatible host. See
-[COMPLETE_CLIENT_PORT.md](https://github.com/rachel-multiverse/protocol/blob/bf7a2d81086c6ecd168f4057c45d428f4815db61/COMPLETE_CLIENT_PORT.md) for local-engine requirements.
+[COMPLETE_CLIENT_PORT.md](https://github.com/rachel-multiverse/protocol/blob/24401fe1fa8c9e0d4fb97f79fb6dea39a348c3b5/COMPLETE_CLIENT_PORT.md) for local-engine requirements.
 
 ### No hot-seat
 
@@ -86,12 +86,12 @@ Where this document names stable identifiers such as `not_your_turn` or
 
 Recovery semantics are frozen separately in:
 
-- [specs/rachel-handshake-v1.md](https://github.com/rachel-multiverse/protocol/blob/bf7a2d81086c6ecd168f4057c45d428f4815db61/specs/rachel-handshake-v1.md)
-- [specs/rachel-sync-v1.md](https://github.com/rachel-multiverse/protocol/blob/bf7a2d81086c6ecd168f4057c45d428f4815db61/specs/rachel-sync-v1.md)
-- [specs/rachel-transitions-v1.md](https://github.com/rachel-multiverse/protocol/blob/bf7a2d81086c6ecd168f4057c45d428f4815db61/specs/rachel-transitions-v1.md)
+- [specs/rachel-handshake-v1.md](https://github.com/rachel-multiverse/protocol/blob/24401fe1fa8c9e0d4fb97f79fb6dea39a348c3b5/specs/rachel-handshake-v1.md)
+- [specs/rachel-sync-v1.md](https://github.com/rachel-multiverse/protocol/blob/24401fe1fa8c9e0d4fb97f79fb6dea39a348c3b5/specs/rachel-sync-v1.md)
+- [specs/rachel-transitions-v1.md](https://github.com/rachel-multiverse/protocol/blob/24401fe1fa8c9e0d4fb97f79fb6dea39a348c3b5/specs/rachel-transitions-v1.md)
 
 To prove an implementation against the reference, validate it with the golden
-wire vectors in [specs/rubp-conformance-v1.md](https://github.com/rachel-multiverse/protocol/blob/bf7a2d81086c6ecd168f4057c45d428f4815db61/specs/rubp-conformance-v1.md).
+wire vectors in [specs/rubp-conformance-v1.md](https://github.com/rachel-multiverse/protocol/blob/24401fe1fa8c9e0d4fb97f79fb6dea39a348c3b5/specs/rubp-conformance-v1.md).
 
 ## Message Format
 
@@ -267,7 +267,7 @@ source of truth in code is `RUBPPlatformID` inside `RachelEngine`.
 
 Important: inclusion in this registry means the protocol can identify the
 machine class. It does **not** mean a supported client exists. The current
-commitment policy lives in `docs/specs/rachel-target-tiers-v1.md`.
+commitment policy lives in [the target tiers contract](https://github.com/rachel-multiverse/protocol/blob/24401fe1fa8c9e0d4fb97f79fb6dea39a348c3b5/specs/rachel-target-tiers-v1.md).
 
 The intended policy is open protocol, narrow official support: machines that
 can honestly implement the handshake, sync, and action contract should be able
@@ -689,6 +689,14 @@ No conversion needed.
 
 ## Transport Layer
 
+Default ports and serial modem commands are recorded in the
+[endpoint contract](https://github.com/rachel-multiverse/protocol/blob/24401fe1fa8c9e0d4fb97f79fb6dea39a348c3b5/specs/rubp-transport-v1.json).
+
+### TLS (Modern Clients)
+
+Modern clients can carry RUBP over TLS on port **443**. The connection carries
+the same fixed-size messages and begins with HELLO after the TLS handshake.
+
 ### TCP (Recommended for Vintage)
 
 - Port: 6502 (canonical raw RUBP endpoint)
@@ -709,7 +717,7 @@ Host → Client:  WELCOME (type 0x02), assigning or reclaiming the player slot
 If HELLO is not received within 5 seconds, the connection is closed.
 
 The exact initial and reconnect sequences are frozen in
-[specs/rachel-handshake-v1.md](https://github.com/rachel-multiverse/protocol/blob/bf7a2d81086c6ecd168f4057c45d428f4815db61/specs/rachel-handshake-v1.md).
+[specs/rachel-handshake-v1.md](https://github.com/rachel-multiverse/protocol/blob/24401fe1fa8c9e0d4fb97f79fb6dea39a348c3b5/specs/rachel-handshake-v1.md).
 
 #### Display Name Requirements
 
@@ -959,7 +967,7 @@ shim; the reference assignments are authoritative.
   the timeout are treated as disconnected. The reference iOS client beats every
   ~2s and times out at ~8s on fast transports; vintage clients on slow links
   should use the gentler intervals under [Timing Considerations](#timing-considerations).
-- The frozen handshake, sync, and transition contracts under [`specs/`](https://github.com/rachel-multiverse/protocol/tree/bf7a2d81086c6ecd168f4057c45d428f4815db61/specs/)
+- The frozen handshake, sync, and transition contracts under [`specs/`](https://github.com/rachel-multiverse/protocol/tree/24401fe1fa8c9e0d4fb97f79fb6dea39a348c3b5/specs/)
   are the authoritative recovery semantics.
 
 **Clarified — clients render, the host decides.** The Design Constraints

@@ -2,8 +2,10 @@
 import argparse
 import hashlib
 import json
-from pathlib import Path
+import os
 import re
+import tempfile
+from pathlib import Path
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("source", nargs="?", default="../protocol")
@@ -19,7 +21,7 @@ if blob != pin["blob"]:
 revision = pin["revision"]
 base = f"https://github.com/{pin['repository']}"
 
-def source_link(match):
+def source_link(match: re.Match[str]) -> str:
     path = match.group(1)
     kind = "tree" if path.rstrip("/") == "specs" else "blob"
     return f"]({base}/{kind}/{revision}/{path})"
@@ -43,5 +45,16 @@ if args.check:
         raise SystemExit("Generated protocol page is stale. Run scripts/protocol.sh with the pinned source.")
     print("Protocol page matches the pinned public source.")
 else:
-    output.write_text(rendered)
+    # Replace only a complete generated page, preserving the previous page
+    # if writing fails or the generator is interrupted.
+    temporary: Path | None = None
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=output.parent, delete=False) as handle:
+            temporary = Path(handle.name)
+            handle.write(rendered)
+        temporary.chmod(output.stat().st_mode if output.exists() else 0o644)
+        os.replace(temporary, output)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
     print(f"Generated {output.relative_to(root)} from {revision}.")
