@@ -1,21 +1,14 @@
 ---
-# GENERATED FILE - DO NOT EDIT
-#
-# Produced by scripts/protocol.sh from PROTOCOL.md in the docs repo, which is
-# the source of truth. Edits here are overwritten on the next run; make them
-# there instead.
-#
-# Source revision: 2e87706
+# GENERATED FILE - DO NOT EDIT. Run scripts/protocol.sh.
+# Source: public rachel-multiverse/protocol, pinned by scripts/protocol-source.json.
 layout: ../layouts/DocLayout.astro
 title: RUBP Protocol - Rachel
-description: The Rachel Unified Binary Protocol - fixed 64-byte messages, big-endian, parseable in Z80, 6502 and 68000 assembly. The wire format every Rachel client speaks.
-sourceRevision: "2e87706"
-# Quoted, or YAML reads a bare 2026-07-23 as a timestamp and the page prints
-# "2026-07-23T00:00:00" at the foot of the specification.
-sourceDate: "2026-07-28"
+description: The Rachel Unified Binary Protocol - fixed 64-byte messages, big-endian, parseable in Z80, 6502 and 68000 assembly.
+sourceRevision: "bf7a2d81086c6ecd168f4057c45d428f4815db61"
+sourceDate: "2026-10-08"
 ---
 
-# RUBP Protocol Specification v1
+# RUBP Protocol Specification
 
 **Rachel Unified Binary Protocol** — Cross-platform multiplayer protocol for Rachel card game.
 
@@ -33,6 +26,12 @@ draft.
 - Parseable in Z80/6502/68000 assembly with minimal code
 - Big-endian byte order (network standard)
 - Implementable with <2KB of protocol handling code on 8-bit systems
+- Two to eight players, identified by stable seat indexes `0` through `7`
+
+Eight is a protocol limit, not merely a host default. The public state reserves
+eight card counts and finish positions, and represents eliminated seats in one
+eight-bit mask. A host must reject a ninth admission rather than truncate a
+player list or start a game whose state cannot be represented on every client.
 
 ### Clients render, the host decides
 
@@ -54,10 +53,10 @@ logic; new messages should be built the same way. The host computes, the
 payload carries, the client displays.
 
 A platform **may** additionally implement the game locally in order to offer
-solo play. iOS does, which is why the app needs no network to play alone. That
-is a platform capability, not a protocol requirement: the vintage clients do
-not have it, and a vintage machine with no host on the network has no game to
-play.
+solo play. The iOS and Android apps and the C64 and VIC-20 clients have local
+solo engines. This is a platform capability, not a protocol requirement;
+network-only clients still need a compatible host. See
+[COMPLETE_CLIENT_PORT.md](https://github.com/rachel-multiverse/protocol/blob/bf7a2d81086c6ecd168f4057c45d428f4815db61/COMPLETE_CLIENT_PORT.md) for local-engine requirements.
 
 ### No hot-seat
 
@@ -87,12 +86,12 @@ Where this document names stable identifiers such as `not_your_turn` or
 
 Recovery semantics are frozen separately in:
 
-- [specs/rachel-handshake-v1.md](https://github.com/rachel-multiverse/protocol/blob/main/specs/rachel-handshake-v1.md)
-- [specs/rachel-sync-v1.md](https://github.com/rachel-multiverse/protocol/blob/main/specs/rachel-sync-v1.md)
-- [specs/rachel-transitions-v1.md](https://github.com/rachel-multiverse/protocol/blob/main/specs/rachel-transitions-v1.md)
+- [specs/rachel-handshake-v1.md](https://github.com/rachel-multiverse/protocol/blob/bf7a2d81086c6ecd168f4057c45d428f4815db61/specs/rachel-handshake-v1.md)
+- [specs/rachel-sync-v1.md](https://github.com/rachel-multiverse/protocol/blob/bf7a2d81086c6ecd168f4057c45d428f4815db61/specs/rachel-sync-v1.md)
+- [specs/rachel-transitions-v1.md](https://github.com/rachel-multiverse/protocol/blob/bf7a2d81086c6ecd168f4057c45d428f4815db61/specs/rachel-transitions-v1.md)
 
 To prove an implementation against the reference, validate it with the golden
-wire vectors in [specs/rubp-conformance-v1.md](https://github.com/rachel-multiverse/protocol/blob/main/specs/rubp-conformance-v1.md).
+wire vectors in [specs/rubp-conformance-v1.md](https://github.com/rachel-multiverse/protocol/blob/bf7a2d81086c6ecd168f4057c45d428f4815db61/specs/rubp-conformance-v1.md).
 
 ## Message Format
 
@@ -111,13 +110,42 @@ Every RUBP message is exactly 64 bytes:
 ```
 Offset  Size  Field         Description
 0       4     Magic         "RACH" (0x52, 0x41, 0x43, 0x48)
-4       1     Version       Protocol version (0x01)
+4       1     Version       Transport version (0x01 legacy, 0x02 CRC)
 5       1     Type          Message type (see below)
 6       2     Sequence      Message sequence number (big-endian)
 8       2     PlayerID      Sender player ID (0xFFFF for host)
 10      2     GameID        Game identifier
-12      4     Timestamp     Unix timestamp or 0 (big-endian)
+12      4     v1 Timestamp  Unix timestamp or 0 (big-endian)
 ```
+
+### RUBP v2 integrity header
+
+RUBP v2 preserves the 16-byte header, 48-byte payload, and every payload
+layout. Only header bytes 12-15 change:
+
+```
+Offset  Size  Field         Description
+12      2     Timestamp16   Low 16 timestamp bits, or 0 (big-endian)
+14      2     CRC16         CRC-16/CCITT-FALSE (big-endian)
+```
+
+The CRC parameters are `poly=0x1021`, `init=0xFFFF`, `refin=false`,
+`refout=false`, `xorout=0x0000`; `"123456789"` produces `0x29B1`. Compute it
+over all 64 bytes with bytes 14-15 set to zero. A receiver must reject a v2
+frame whose CRC does not match before interpreting its type, identifiers,
+payload, state hash, or game-over flag.
+
+The transport version is negotiated by the client's HELLO header. A host that
+successfully decodes a v1 HELLO replies to that connection in v1; a v2 HELLO
+selects v2 for every reply on that connection. Selection is per connection, so
+v1 and v2 clients may share a lobby. RachelSpec `specVersion` in message
+payloads is independent of this transport version.
+
+CRC detects corruption but does not itself recover a lost frame. A client
+already holding an assigned identity uses `SYNC_REQUEST` to obtain a fresh
+`GAME_STATE` and `HAND_SYNC`. Slow software-UART platforms should additionally
+advertise or document their required inter-frame idle interval; the reference
+server currently spaces VIC-20 frames by at least 70 ms.
 
 ### Message Types
 
@@ -226,7 +254,10 @@ Offset  Size  Field           Description
 16      2     PlatformID      Client platform (see below)
 18      2     SpecVersion     RachelSpec version supported by client
 20      8     ReconnectToken  Stable token for reclaiming a slot (0 = none)
-28      20    Reserved        Zero-filled
+28      8     RoomCode        Optional ASCII room code, null-padded
+36      1     Capabilities    Bit 0: SYNC_REQUEST acknowledgement extension
+37      3     Look            Chosen portrait, 3 bytes; all zero = none (see Portrait Look)
+40      8     Reserved        Zero-filled
 ```
 
 The HELLO header `GameID` is `0` for a fresh join and the active game ID when reclaiming a disconnected slot.
@@ -307,7 +338,9 @@ reserved so any client can announce itself honestly without colliding.
 0x009C: NEC PC-88             0x009D: NEC PC-98            0x009E: FM Towns
 0x009F: Oric-1/Atmos          0x00A0: Dragon 32/64         0x00A1: Jupiter ACE
 0x00A2: SAM Coupé             0x00A3: Tatung Einstein      0x00A4: Memotech MTX
-0x00A5: Camputers Lynx (the other one!)
+0x00A5: Camputers Lynx (the other one!)                    0x00A6: Acorn Electron
+
+0x00D7: Atari 7800
 
 0x00F0: Smart TV              0x00F1: Smart Fridge         0x00F2: Tesla
 0x00F3: Smart Watch           0x00F4: Steam Deck           0x00F5: Analogue Pocket
@@ -523,7 +556,9 @@ PlayerInfo structure (6 bytes):
   Offset  Size  Field       Description
   0       1     PlayerID    Player index (0-7)
   1       2     PlatformID  Platform ID (big-endian)
-  3       3     Reserved    Zero-filled
+  3       3     Look        Chosen portrait, relayed as received; zero = none (see Portrait Look);
+                            entries 0-6 only; the eighth entry's Look would overrun the
+                            payload and is never sent
 ```
 
 ### ANNOUNCE (0x0D) — Host → Clients
@@ -656,7 +691,7 @@ No conversion needed.
 
 ### TCP (Recommended for Vintage)
 
-- Port: 19840 (1984 + 0)
+- Port: 6502 (canonical raw RUBP endpoint)
 - Bonjour/mDNS service type: `_rachel._tcp`
 - **TCP framing required** — TCP is a byte stream, use 64-byte message boundaries
 - Unencrypted (TLS not viable for vintage hardware)
@@ -664,17 +699,17 @@ No conversion needed.
 
 #### TCP Connection Handshake
 
-After TCP connect, both parties exchange transport-level HELLO messages before game traffic:
+After TCP connect, the client begins the game-layer handshake:
 
 ```
-Client → Host:  HELLO (type 0x01) with display name in payload bytes 0-15
-Host → Client:  HELLO (type 0x01) with display name in payload bytes 0-15
-                (connection established, game-layer messages can flow)
+Client → Host:  HELLO (type 0x01), including display name and reclaim metadata
+Host → Client:  WELCOME (type 0x02), assigning or reclaiming the player slot
 ```
 
 If HELLO is not received within 5 seconds, the connection is closed.
 
-Once the TCP transport is established, the normal game-layer initial sync still begins with the client sending a HELLO to claim or reclaim a player slot.
+The exact initial and reconnect sequences are frozen in
+[specs/rachel-handshake-v1.md](https://github.com/rachel-multiverse/protocol/blob/bf7a2d81086c6ecd168f4057c45d428f4815db61/specs/rachel-handshake-v1.md).
 
 #### Display Name Requirements
 
@@ -690,7 +725,7 @@ Hosts advertise via mDNS:
 ```
 Service Type: _rachel._tcp
 Service Name: <user-chosen game name>
-Port: 19840
+Port: 6502
 ```
 
 ESP8266/ESP32 WiFi bridges support mDNS, enabling vintage machine discovery.
@@ -795,7 +830,7 @@ This protocol has minimal security (vintage machines cannot handle crypto).
 ## Implementation Checklist
 
 ### Host Implementation
-- [ ] Listen on port 19840
+- [ ] Listen on port 6502
 - [ ] Advertise via mDNS
 - [ ] Handle HELLO → assign/reclaim slot → send WELCOME
 - [ ] Broadcast PLAYER_LIST on join
@@ -833,7 +868,7 @@ This protocol has minimal security (vintage machines cannot handle crypto).
 │  Message: 64 bytes (16 header + 48 payload)                     │
 │  Byte order: Big-endian                                         │
 │  Magic: "RACH" (0x52 0x41 0x43 0x48)                            │
-│  Port: 19840                                                    │
+│  Port: 6502                                                     │
 │  mDNS: _rachel._tcp                                             │
 ├─────────────────────────────────────────────────────────────────┤
 │  Card encoding (1 byte):                                        │
@@ -852,7 +887,42 @@ This protocol has minimal security (vintage machines cannot handle crypto).
 
 ---
 
+### Portrait Look (3 bytes)
+
+HELLO bytes 37-39 and each PLAYER_LIST `PlayerInfo` entry's bytes 3-5 carry a
+player's chosen portrait, packed big-endian:
+
+```
+byte 0: P HHHHH EE   present, headwear (5 bits), eyewear high 2 bits
+byte 1: E FF SSS RR  eyewear low bit, facial hair (2), skin (3), signature high 2 bits
+byte 2: R 0000000    signature low bit; the rest is ignored on decode
+```
+
+Field ranges: headwear 0-31, eyewear 0-7, facial hair 0-3, skin 0-7,
+signature 0-7. The present bit (byte 0, bit 7) clear means no look was sent:
+all three bytes read zero, and the receiver derives a face from the name.
+Bits 6…0 of byte 2 are ignored by readers. Index meanings (which hat is 6)
+belong to the client that draws faces; a client that draws none need not
+interpret the field. A client that draws no faces must preserve the Look bytes
+when it re-encodes a message it received (the conformance vectors require
+byte-identical re-encoding); it need not interpret them.
+
+In PLAYER_LIST only the first seven `PlayerInfo` entries carry a Look. The
+eighth entry's Look bytes would land at payload bytes 46-48, one past the
+48-byte payload, so a full table sends the eighth seat no Look. This also
+leaves byte 47 free for the sync-capability echo the handshake spec reserves.
+
+---
+
 ## Changelog
+
+### RUBP v2 — CRC-protected transport
+
+- Added CRC-16/CCITT-FALSE in header bytes 14-15.
+- Reduced the optional transport timestamp to its low 16 bits in v2.
+- Kept the 64-byte frame, 48-byte payload, message types, and payload layouts.
+- Defined per-connection v1/v2 selection from the HELLO header.
+- Required CRC validation before any v2 frame content is trusted.
 
 ### Reconciled against the `rachel-ios` reference
 
@@ -889,7 +959,7 @@ shim; the reference assignments are authoritative.
   the timeout are treated as disconnected. The reference iOS client beats every
   ~2s and times out at ~8s on fast transports; vintage clients on slow links
   should use the gentler intervals under [Timing Considerations](#timing-considerations).
-- The frozen handshake, sync, and transition contracts under [`specs/`](https://github.com/rachel-multiverse/protocol/tree/main/specs)
+- The frozen handshake, sync, and transition contracts under [`specs/`](https://github.com/rachel-multiverse/protocol/tree/bf7a2d81086c6ecd168f4057c45d428f4815db61/specs/)
   are the authoritative recovery semantics.
 
 **Clarified — clients render, the host decides.** The Design Constraints
@@ -910,3 +980,8 @@ decides".
 The **single source of truth is the `RachelEngine` code** (`RUBPMessage`,
 `RUBPPlatformID`, `RachelSpec`). This document tracks it; the frozen `specs/`
 files pin the behaviours that must not change within v1.
+
+### 2026-09-21 — Portrait Look added to HELLO and PLAYER_LIST
+
+HELLO bytes 37-39 and PlayerInfo bytes 3-5 carry a Portrait Look (additive;
+zeros mean what the reserved bytes meant).

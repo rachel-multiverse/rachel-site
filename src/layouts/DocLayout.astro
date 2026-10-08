@@ -18,8 +18,8 @@ const { title, description, sourceRevision, sourceDate } = frontmatter;
         <p class="provenance">
           Generated from <code>PROTOCOL.md</code> at revision <code>{sourceRevision}</code>{
             sourceDate ? `, last changed ${sourceDate}` : ''
-          }. The specification is the source of truth for every Rachel client;
-          where it and a client disagree, the specification is what gets fixed.
+          }. The wire contract is reconciled against the RachelEngine reference;
+          disagreements require checking the reference and shared fixtures.
         </p>
       )}
 

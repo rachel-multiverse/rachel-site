@@ -3,6 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -11,7 +12,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: "pages-${{ github.ref }}"
   cancel-in-progress: false
 
 jobs:
@@ -20,6 +21,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+
+      - name: Read protocol source pin
+        id: protocol
+        run: python3 -c 'import json, os; pin=json.load(open("scripts/protocol-source.json")); open(os.environ["GITHUB_OUTPUT"], "a").write("revision=" + pin["revision"] + "\n")'
+
+      - name: Check out public protocol source
+        uses: actions/checkout@v6
+        with:
+          repository: rachel-multiverse/protocol
+          ref: ${{ steps.protocol.outputs.revision }}
+          path: .protocol-source
+
+      - name: Verify generated protocol page
+        run: bash scripts/protocol.sh .protocol-source --check
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -35,11 +50,13 @@ jobs:
         run: npm run build
 
       - name: Upload artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v5
         with:
           path: ./dist
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:
