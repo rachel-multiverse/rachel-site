@@ -1,8 +1,8 @@
 # Rachel website
 
 Astro site for Rachel, deployed to GitHub Pages at
-https://rachel.stevehill.xyz. The current local update is prepared for Rachel
-1.2: Saturday, Game Center invitations and Apple silicon Mac support.
+https://rachel.stevehill.xyz. Rachel is available for iPhone, iPad and Apple
+silicon Mac, with Saturday, Game Center invitations and nearby play.
 
 ## Local preview
 
@@ -45,11 +45,10 @@ metadata is stripped. The app icon comes from the iOS asset catalogue.
 
 ## Release
 
-The site can publish ahead of the app update: a notice marks the 1.2 features
-as forthcoming, while download links point to the existing app. After manual
-app release and confirmed store availability, set `RELEASE_1_2_AVAILABLE` to
-`true` in `src/config.ts`, remove the forthcoming line from the social card
-and render it again. App approval by itself does not release it.
+`RELEASE_1_2_AVAILABLE` is `true` in `src/config.ts`: these features have
+shipped. The public site and social card describe released availability.
+Verify the live App Store listing before changing release or platform claims;
+app approval by itself does not release an update.
 The App Store URL is shared through `src/config.ts`; every download button
 uses it.
 
